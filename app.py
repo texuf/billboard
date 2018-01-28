@@ -36,9 +36,10 @@ class ChatBackend(object):
 
     def __iter_data(self):
         for message in self.pubsub.listen():
+            # app.logger.info('message %s' % message)
             data = message.get('data')
             if message['type'] == 'message':
-                app.logger.info('Sending message: {}'.format(data))
+                # app.logger.info('Sending message: {}'.format(data))
                 yield data
 
     def register(self, client):
@@ -84,7 +85,7 @@ def inbox(ws):
         message = ws.receive()
 
         if message:
-            app.logger.info('Inserting message: {}'.format(message))
+            # app.logger.info('Inserting message: {}'.format(message))
             redis.publish(REDIS_CHAN, message)
 
 @sockets.route('/receive')
