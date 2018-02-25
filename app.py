@@ -9,22 +9,24 @@ from flask_sockets import Sockets
 import json
 
 REDIS_URL = os.environ['REDIS_URL']
+DEBUG = 'DEBUG' in os.environ
 REDIS_CHAN = 'chat'
+
 
 redis = redis.from_url(REDIS_URL)
 app = Flask(__name__)
-app.debug = True #'DEBUG' in os.environ
+app.debug = DEBUG
 sockets = Sockets(app)
 
-
 #add logging
-log_handler = logging.StreamHandler()
-log_handler.setFormatter(logging.Formatter(
-    '%(asctime)s %(levelname)s: %(message)s '
-    '[in %(pathname)s:%(lineno)d]'))
-app.logger.addHandler(log_handler)
-app.logger.setLevel(logging.DEBUG)
+if not DEBUG:
+    log_handler = logging.StreamHandler()
+    log_handler.setFormatter(logging.Formatter(
+        '%(asctime)s %(levelname)s: %(message)s '
+        '[in %(pathname)s:%(lineno)d]'))
+    app.logger.addHandler(log_handler)
 
+app.logger.setLevel(logging.DEBUG)
 
 class ChatBackend(object):
     """Interface for registering and updating WebSocket clients."""
