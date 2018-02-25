@@ -9,5 +9,5 @@ redis-server /usr/local/etc/redis.conf &
 # open err up
 python -mwebbrowser http://localhost:5000
 # start app via heroku cli
-heroku local
+heroku local -f ProcfileDevelopment
 
