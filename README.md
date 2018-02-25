@@ -11,17 +11,17 @@ Check it out: https://protected-island-17148.herokuapp.com
 
 ### Setup 
 ```
-git clone git@github.com:texuf/billboard.git
-cd billboard
-./setup.sh
+$ git clone git@github.com:texuf/billboard.git
+$ cd billboard
+$ ./setup.sh
 ```
 ### Run
 ```
-./run.sh
+$ ./run.sh
 ```
 ### Maintenance
 ```
-./freeze.sh
+$ ./freeze.sh
 ```
 ### Deploy to Heroku
 ```
@@ -55,7 +55,7 @@ $ sudo -H pip install --ignore-installed pipenv
 
 ### Examples//Links
 * http://www.metablocks.com/2012/07/qr-code-art-examples-2/
-* https://www.google.com/search? q=qr+code+examples&safe=off&rlz=1C5CHFA_enUS722US729&tbm=isch&tbo=u&source=univ&sa=X&ved=0ahUKEwj4q-zY_tvYAhUK0oMKHVfGBOQQsAQIKA&biw=1536&bih=1276#imgdii=z9TPzfg7wpU7tM:&imgrc=qYFbC-k8OyYhkM:
+* https://www.google.com/search?q=qr+code+examples&safe=off&rlz=1C5CHFA_enUS722US729&tbm=isch&tbo=u&source=univ&sa=X&ved=0ahUKEwj4q-zY_tvYAhUK0oMKHVfGBOQQsAQIKA&biw=1536&bih=1276#imgdii=z9TPzfg7wpU7tM:&imgrc=qYFbC-k8OyYhkM:
 
 
 ### Other approaches
