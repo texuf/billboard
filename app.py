@@ -97,9 +97,15 @@ def hello():
 def controller():
     return render_template('controller.html')
 
+
 @app.route('/screen')
 def screen():
     return render_template('screen.html', qr_code=shortuuid.uuid())
+
+@app.route('/screen2')
+def screen2():
+    return render_template('screen2.html', qr_code=shortuuid.uuid())
+
 
 @sockets.route('/submit')
 def inbox(ws):
