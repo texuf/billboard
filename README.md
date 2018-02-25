@@ -44,6 +44,7 @@ Check it out: https://protected-island-17148.herokuapp.com
 
 
 ### Links
+https://github.com/mitmedialab/Junkyard-Jumbotron
 Junkyard Jumbotron http://www.businessinsider.com/how-to-transform-multiple-screens-into-one-big-virtual-display-2011-3
 
 ### Documentation
