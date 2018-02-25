@@ -36,11 +36,25 @@ Billboards
     $ sudo -H pip install --ignore-installed pipenv
 
 
+### Links
+Junkyard Jumbotron http://www.businessinsider.com/how-to-transform-multiple-screens-into-one-big-virtual-display-2011-3
+
 ### Documentation
 https://redis.io/topics/pubsub
 [redis pubsub demp](https://gist.github.com/pietern/348262)
+https://github.com/heroku-examples/python-websockets-chat/blob/master/chat.py
 
 
 ### Examples//Links
 http://www.metablocks.com/2012/07/qr-code-art-examples-2/
 https://www.google.com/search?q=qr+code+examples&safe=off&rlz=1C5CHFA_enUS722US729&tbm=isch&tbo=u&source=univ&sa=X&ved=0ahUKEwj4q-zY_tvYAhUK0oMKHVfGBOQQsAQIKA&biw=1536&bih=1276#imgdii=z9TPzfg7wpU7tM:&imgrc=qYFbC-k8OyYhkM:
+
+
+### Other approaches
+https://github.com/dlbeer/quirc
+https://github.com/kAworu/node-quirc
+
+https://davidshimjs.github.io/qrcodejs/
+https://github.com/schmich/instascan
+https://github.com/edi9999/jsqrcode
+https://github.com/LazarSoft/jsqrcode

@@ -4,8 +4,9 @@ import os
 import logging
 import redis
 import gevent
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from flask_sockets import Sockets
+from time import strftime
 import json
 
 REDIS_URL = os.environ['REDIS_URL']
@@ -78,6 +79,14 @@ chats.start()
 def hello():
     return render_template('index.html')
 
+@app.route('/controller')
+def controller():
+    return render_template('controller.html')
+
+@app.route('/screen')
+def screen():
+    return render_template('screen.html')
+
 @sockets.route('/submit')
 def inbox(ws):
     """Receives incoming chat messages, inserts them into Redis."""
@@ -101,3 +110,17 @@ def outbox(ws):
 
 
 
+@app.after_request
+def after_request(response):
+    # This IF avoids the duplication of registry in the log,
+    # since that 500 is already logged via @app.errorhandler.
+    if response.status_code != 500:
+        ts = strftime('[%Y-%b-%d %H:%M]')
+        app.logger.info('%s %s %s %s %s %s',
+                      ts,
+                      request.remote_addr,
+                      request.method,
+                      request.scheme,
+                      request.full_path,
+                      response.status)
+    return response
