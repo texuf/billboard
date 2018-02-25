@@ -8,6 +8,7 @@ from flask import Flask, render_template, request
 from flask_sockets import Sockets
 from time import strftime
 import json
+import shortuuid
 
 REDIS_URL = os.environ['REDIS_URL']
 DEBUG = 'DEBUG' in os.environ
@@ -16,6 +17,17 @@ REDIS_CHAN = 'chat'
 
 redis = redis.from_url(REDIS_URL)
 app = Flask(__name__)
+# switch up our jinja options so that they don't conflict with view
+jinja_options = app.jinja_options.copy()
+jinja_options.update(dict(
+    block_start_string='$%', # was {%
+    block_end_string='%$', # was %}
+    variable_start_string='${', # was {{
+    variable_end_string='}$', # was }}
+    comment_start_string='$#', # was {#
+    comment_end_string='#$', # was #}
+))
+app.jinja_options = jinja_options
 app.debug = DEBUG
 sockets = Sockets(app)
 
@@ -85,7 +97,7 @@ def controller():
 
 @app.route('/screen')
 def screen():
-    return render_template('screen.html')
+    return render_template('screen.html', qr_code=shortuuid.uuid())
 
 @sockets.route('/submit')
 def inbox(ws):

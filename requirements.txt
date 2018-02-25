@@ -9,4 +9,5 @@ itsdangerous==0.24
 Jinja2==2.10
 MarkupSafe==1.0
 redis==2.10.6
+shortuuid==0.5.0
 Werkzeug==0.14.1
