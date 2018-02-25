@@ -27,12 +27,13 @@
 //                build canvas 
 //////////////////////////////////////////////////////////////////////////////
 console.log('screen size', document.getElementById('qrcodeCanvasWrapper').offsetWidth, document.getElementById('qrcodeCanvasWrapper').offsetHeight)
+var qrcodeSize = Math.min(document.getElementById('qrcodeCanvasWrapper').offsetWidth, document.getElementById('qrcodeCanvasWrapper').offsetHeight) - 1 / 40
 var canvas = document.createElement('canvas');
 document.querySelector('#arcode-container').appendChild(canvas)
-canvas.width  = 1024;
-canvas.height = 1024;
-canvas.style.width  = '512px';
-canvas.style.height = '512px';
+canvas.width  = qrcodeSize * 2;
+canvas.height = qrcodeSize * 2;
+canvas.style.width  = (qrcodeSize) + 'px';
+canvas.style.height = (qrcodeSize) + 'px';
 
 var context = canvas.getContext('2d')
 
@@ -86,8 +87,8 @@ function generateQrCodeImage(text, onLoaded){
 
         var qrcode = new QRCode(container, {
                 text: text,
-                width: 256,
-                height: 256,
+                width: qrcodeSize / 4,
+                height: qrcodeSize / 4,
                 colorDark : '#000000',
                 colorLight : '#ffffff',
                 // correctLevel : QRCode.CorrectLevel.H
