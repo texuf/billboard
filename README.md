@@ -1,6 +1,18 @@
-# billboard
+# billboard (in progress)
 Billboards
 Check it out: https://protected-island-17148.herokuapp.com
+
+### Todo
+* Controller
+  * read multiple qr codes at once, or figure out a way to scan for multiple
+  * add button that captures all current qr codes
+  * translate qr code locations into points on a plane
+  * publish image and relative positions to screens
+  * transition to image view, allow panning and zooming
+* Screen
+  * subscribe to backend
+  * replace qr code with image 
+  * position image on screen  
 
 ### Prerequisits
 
