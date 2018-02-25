@@ -6,6 +6,7 @@ import redis
 import gevent
 from flask import Flask, render_template, request
 from flask_sockets import Sockets
+from flask_sslify import SSLify
 from time import strftime
 import json
 import shortuuid
@@ -17,6 +18,7 @@ REDIS_CHAN = 'chat'
 
 redis = redis.from_url(REDIS_URL)
 app = Flask(__name__)
+sslify = SSLify(app)
 # switch up our jinja options so that they don't conflict with view
 jinja_options = app.jinja_options.copy()
 jinja_options.update(dict(

@@ -1,6 +1,7 @@
 click==6.7
 Flask==0.12.2
 Flask-Sockets==0.2.1
+Flask-SSLify==0.1.5
 gevent==1.2.2
 gevent-websocket==0.10.1
 greenlet==0.4.12
