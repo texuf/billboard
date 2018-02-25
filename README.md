@@ -61,7 +61,6 @@ $ sudo -H pip install --ignore-installed pipenv
 ### Other approaches
 * https://github.com/dlbeer/quirc
 * https://github.com/kAworu/node-quirc
-
 * https://davidshimjs.github.io/qrcodejs/
 * https://github.com/schmich/instascan
 * https://github.com/edi9999/jsqrcode
