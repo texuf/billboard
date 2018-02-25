@@ -1,24 +1,105 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Screen ${qr_code}$</title>
-<!-- thanks https://github.com/jeromeetienne/jquery-qrcode/blob/master/examples/basic.html !!! -->
-</head>
-<body>
-    <script type="text/javascript" src="static/js/jquery-2.0.3.min.js"></script>
-    <script type="text/javascript" src="static/vendor/jeromeetinne/jquery-qrcode/jquery.qrcode.js"></script>
-    <script type="text/javascript" src="static/vendor/jeromeetinne/jquery-qrcode/qrcode.js"></script>
-    <div id="qrcodeCanvasWrapper" style="position: absolute; top: 0; right: 0; bottom: 0; left: 0;">
-           <div id="qrcodeCanvas" align="center"></div>
-    </div> 
-    <script>
-        //jQuery('#qrcode').qrcode("this plugin is great");
-        jQuery('#qrcodeCanvas').qrcode({
-            text    : "${qr_code}$",
-            width   : Math.min(document.getElementById('qrcodeCanvasWrapper').offsetHeight - 5, document.getElementById('qrcodeCanvasWrapper').offsetWidth),
-            height  : Math.min(document.getElementById('qrcodeCanvasWrapper').offsetHeight - 5, document.getElementById('qrcodeCanvasWrapper').offsetWidth)
-        }); 
-    </script>
+        <title>Screen ${qr_code}$</title>
+        <!-- thanks https://jeromeetienne.github.io/AR.js/three.js/examples/arcode.html -->
+        <!--Import materialize.css-->
+        <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css"  media="screen,projection"/>
+        
+        <!--Let browser know website is optimized for mobile-->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
+        <!-- https://davidshimjs.github.io/qrcodejs/ -->
+        <script src='https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js'></script>
+
+</head>
+
+<body>
+        <div id="qrcodeCanvasWrapper" style="position: absolute; top: 0; right: 0; bottom: 0; left: 0;">
+                <div class="valign-wrapper">
+                        <div id='arcode-container' class="valign center" style="width: 100%;" ></div>
+                </div>
+        </div>
+
+<script>
+
+//////////////////////////////////////////////////////////////////////////////
+//                build canvas 
+//////////////////////////////////////////////////////////////////////////////
+console.log('screen size', document.getElementById('qrcodeCanvasWrapper').offsetWidth, document.getElementById('qrcodeCanvasWrapper').offsetHeight)
+var canvas = document.createElement('canvas');
+document.querySelector('#arcode-container').appendChild(canvas)
+canvas.width  = 1024;
+canvas.height = 1024;
+canvas.style.width  = '512px';
+canvas.style.height = '512px';
+
+var context = canvas.getContext('2d')
+
+var hiroImage = new Image;
+hiroImage.onload = function() {
+        console.log('hiro image loaded')
+        updateARCode()
+}
+hiroImage.src = 'static/images/hiro.png';
+
+function updateARCode(){
+        var urlQrCode = "${qr_code}$"
+        
+        
+        var parameters = {
+            urlQrCode : urlQrCode
+        }
+        
+        // generate the ar-code canvas
+        generateArCodeCanvas(canvas, urlQrCode, function onReady(){
+            console.log('ar-code generated for', urlQrCode)
+        })
+
+}
+
+//////////////////////////////////////////////////////////////////////////////
+//                Code Separator
+//////////////////////////////////////////////////////////////////////////////
+
+/**
+ * Generate AR-Code
+ */
+function generateArCodeCanvas(canvas, text, onLoad){
+        var context = canvas.getContext('2d')
+        
+        context.drawImage(hiroImage, 0, 0, canvas.width, canvas.height);
+
+        generateQrCodeImage(text, function onLoaded(qrCodeImage){
+                console.log('qrcode generated')
+                context.drawImage(qrCodeImage,canvas.width*0.50,canvas.height*0.30,canvas.width*0.20, canvas.height*0.20);      
+                
+                onLoad && onLoad()          
+        })
+}
+
+/**
+ * Generate AR-Code
+ */
+function generateQrCodeImage(text, onLoaded){
+        var container = document.createElement('div')
+
+        var qrcode = new QRCode(container, {
+                text: text,
+                width: 256,
+                height: 256,
+                colorDark : '#000000',
+                colorLight : '#ffffff',
+                // correctLevel : QRCode.CorrectLevel.H
+        });
+
+        var qrCodeImage = container.querySelector('img')
+        qrCodeImage.addEventListener('load', function(){
+                onLoaded(qrCodeImage)
+        })
+        
+}
+
+</script>
 </body>
 </html>
