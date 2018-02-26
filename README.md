@@ -40,6 +40,11 @@ Check it out: https://protected-island-17148.herokuapp.com
     $ heroku logs --tail # so you can see the action!
 ```
 
+### Deploy
+```
+    $ ./deploy
+```
+
 ### Maintenance
 ```
     $ ./freeze # records any changes to configuration. Todo: Git hook that checks dependencies, prompts user to make dependency change independently in seperate diff, to be landed before any changes are committed to master.
