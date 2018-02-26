@@ -23,33 +23,35 @@ Check it out: https://protected-island-17148.herokuapp.com
 
 ### Setup 
 ```
-$ git clone git@github.com:texuf/billboard.git
-$ cd billboard
-$ ./setup.sh
+    $ git clone git@github.com:texuf/billboard.git
+    $ cd billboard
+    $ ./setup
 ```
-### Run
+### Run Locally
 ```
-$ ./run.sh
+    $ ./run
 ```
+### Create Instance on Heroku
+```
+    $ heroku create # one time only
+    $ heroku addons:create heroku-redis # one time only
+    $ git push heroku master # every change
+    $ heroku open # launch your live creation in the broswer
+    $ heroku logs --tail # so you can see the action!
+```
+
 ### Maintenance
 ```
-$ ./freeze.sh
+    $ ./freeze # records any changes to configuration. Todo: Git hook that checks dependencies, prompts user to make dependency change independently in seperate diff, to be landed before any changes are committed to master.
 ```
-### Deploy to Heroku
-```
-$ heroku create # one time only
-$ heroku addons:create heroku-redis # one time only
-$ git push heroku master # every change
-$ heroku open # launch your live creation in the broswer
-$ heroku logs --tail # so you can see the action!
-```
+
 ### Troubleshooting
 * Use `http://localhost:5000/` instead of `0.0.0.0:5000` if you want the browser to have permissions to access the camera
 ```
-$ pip install pipenv
-$ # is supposed to "work"
-$ # I had to run the following to get pipenv on my mac without warnings
-$ sudo -H pip install --ignore-installed pipenv
+    $ pip install pipenv
+    $ # is supposed to "work"
+    $ # I had to run the following to get pipenv on my mac without warnings
+    $ sudo -H pip install --ignore-installed pipenv
 ```
 
 * I'm using [pipenv](http://docs.pipenv.org/) for my python dependencies.
