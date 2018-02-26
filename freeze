@@ -1,5 +1,5 @@
 #!/bin/bash
-
+echo "info: freezing..."
 # switch to venv
 source venv/bin/activate
 # feeze env

@@ -1,4 +1,5 @@
 #!/bin/bash
+echo: "info: Setting up..."
 
 if [[ ! pipenv ]]; then
     echo "installing pipenv"
