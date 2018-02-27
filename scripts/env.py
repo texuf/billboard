@@ -22,6 +22,12 @@ def setup():
             for k, v in env_lock.items():
                 f.write('%s=%s\n' % (k, v))
 
+def load():
+    env = _get_dict(ENV_FILENAME)
+    for k,v in env.items():
+        print("loading %s %s" % (k, v))
+        os.environ[k] = v
+
 def check():
     if not os.path.isfile(ENV_FILENAME):
         setup()
