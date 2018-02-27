@@ -33,6 +33,10 @@ Check it out: https://protected-island-17148.herokuapp.com
 ```
     $ ./run
 ```
+### Run Tests
+```
+    $ ./run_tests
+```
 ### Create Instance on Heroku
 ```
     $./create
