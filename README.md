@@ -22,8 +22,10 @@ Check it out: https://protected-island-17148.herokuapp.com
 - heroku cli https://devcenter.heroku.com/articles/heroku-cli
 
 ### Setup 
+1) Fork the repo
+2) Clone your fork
+3) Run the following:
 ```
-    $ git clone git@github.com:texuf/billboard.git
     $ cd billboard
     $ ./setup
 ```
