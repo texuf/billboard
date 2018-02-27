@@ -27,29 +27,29 @@ Check it out: https://protected-island-17148.herokuapp.com
 3) Run the following:
 ```
     $ cd billboard
-    $ ./setup
+    $ ./scripts/setup.sh
 ```
 ### Run Locally
 ```
-    $ ./run
+    $ ./scripts/run.sh
 ```
 ### Run Tests
 ```
-    $ ./run_tests
+    $ ./scripts/run_tests.sh
 ```
 ### Create Instance on Heroku
 ```
-    $./create
+    $./scripts/create.sh
 ```
 
 ### Deploy
 ```
-    $ ./deploy
+    $ ./scripts/deploy.sh
 ```
 
 ### Maintenance
 ```
-    $ ./freeze # records any changes to configuration. Todo: Git hook that checks dependencies, prompts user to make dependency change independently in seperate diff, to be landed before any changes are committed to master.
+    $ ./scripts/freeze.sh # records any changes to configuration. Todo: Git hook that checks dependencies, prompts user to make dependency change independently in seperate diff, to be landed before any changes are committed to master.
 ```
 
 ### Troubleshooting
