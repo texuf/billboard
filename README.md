@@ -27,11 +27,11 @@ Check it out: https://protected-island-17148.herokuapp.com
 3) Run the following:
 ```
     $ cd billboard
-    $ ./scripts/setup.sh
+    $ ./scripts/setup.sh # installs all dependencies including redis
 ```
 ### Run Locally
 ```
-    $ ./scripts/run.sh
+    $ ./scripts/run.sh # uses heroku local command to launch the site with the ProcfileDevelopment settings, requires cli
 ```
 ### Run Tests
 ```
@@ -39,12 +39,12 @@ Check it out: https://protected-island-17148.herokuapp.com
 ```
 ### Create Instance on Heroku
 ```
-    $./scripts/create.sh
+    $./scripts/create_deployment.sh # only needs to get run once, requires heroku cli
 ```
 
 ### Deploy
 ```
-    $ ./scripts/deploy.sh
+    $ ./scripts/deploy.sh # pushes to origin and heroku
 ```
 
 ### Maintenance
