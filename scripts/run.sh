@@ -1,5 +1,8 @@
 #!/bin/bash
-
+if ! [ -x "$(command -v heroku)" ]; then
+    echo "heroku cli required, check readme.md"
+    exit
+fi
 # switch to venv
 source venv/bin/activate
 # check for local env variables
