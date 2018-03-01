@@ -37,7 +37,7 @@ Check it out: https://protected-island-17148.herokuapp.com
 ```
     $ ./scripts/run_tests.sh
 ```
-### Create Instance on Heroku
+### Create Instance on Heroku (requires authenticated heroku account with credit card)
 ```
     $./scripts/create_deployment.sh # only needs to get run once, requires heroku cli
 ```
