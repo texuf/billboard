@@ -5,7 +5,6 @@
     <link href="static/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="static/css/application.css" rel="stylesheet" media="screen">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <!-- three.js library -->
     <script src='static/vendor/three/build/three.min.js'></script>
     <script src="static/vendor/three/examples/js/libs/stats.min.js"></script>
@@ -84,14 +83,17 @@
     })
 
     arToolkitSource.init(function onReady(){
+        console.info("init!!!!")
         onResize()
     })
     
     // handle resize
     window.addEventListener('resize', function(){
+        console.info("resize1!!!!")
         onResize()
     })
     function onResize(){
+        console.info("resize2!!!!")
         arToolkitSource.onResize()  
         arToolkitSource.copySizeTo(renderer.domElement) 
         if( arToolkitContext.arController !== null ){
@@ -114,14 +116,16 @@
     })
     // initialize it
     arToolkitContext.init(function onCompleted(){
+        console.info("init 1")
         // copy projection matrix to camera
         camera.projectionMatrix.copy( arToolkitContext.getProjectionMatrix() );
     })
 
     // update artoolkit on every frame
     onRenderFcts.push(function(){
+        
         if( arToolkitSource.ready === false )   return
-
+        // console.info("onrender facts 1")
         arToolkitContext.update( arToolkitSource.domElement )
     })
     
@@ -147,6 +151,7 @@
         lerpScale: 1,
     })
     onRenderFcts.push(function(delta){
+        // console.info("onrender facts 2 " + delta)
         smoothedControls.update(markerRoot)
     })
     //////////////////////////////////////////////////////////////////////////////////
@@ -183,6 +188,7 @@
     document.body.appendChild( stats.dom );
     // render the scene
     onRenderFcts.push(function(){
+        //console.info("onrender facts 3")
         renderer.render( scene, camera );
         stats.update();
     })
@@ -198,6 +204,7 @@
         lastTimeMsec    = nowMsec
         // call each update function
         onRenderFcts.forEach(function(onRenderFct){
+            //console.info("onrender facts 5")
             onRenderFct(deltaMsec/1000, nowMsec/1000)
         })
     })
