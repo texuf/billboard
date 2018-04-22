@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "info: Pushing master to origin..."
-git push origin master
+# git push origin master
 echo "info: Pushing master to heroku..."
 git push heroku master
 

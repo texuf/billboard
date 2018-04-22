@@ -4,10 +4,11 @@ Check it out: https://protected-island-17148.herokuapp.com
 
 ### Todo
 * Controller
-  * read multiple qr codes at once, or figure out a way to scan for multiple
-  * add button that captures all current qr codes
+  * print qr code value 
+  * print position info of qr code on screen (https://www.3dgep.com/understanding-the-view-matrix/)
+  * remove billboard header
+  * transimt value and position information to backend
   * translate qr code locations into points on a plane
-  * publish image and relative positions to screens
   * transition to image view, allow panning and zooming
 * Screen
   * subscribe to backend

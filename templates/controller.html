@@ -14,10 +14,6 @@
   <body>
     
     <div class="container" style="z-index: 2; position: relative">
-      <div class="jumbotron">
-        <h1>Billboard Demo</h1>
-        <hr />
-      </div>
       <form id="input-form" class="form-inline">
         <div class="form-group">
           <input id="input-handle" type="text" class="form-control" placeholder="Enter handle" autofocus />
@@ -125,7 +121,7 @@
     onRenderFcts.push(function(){
         
         if( arToolkitSource.ready === false )   return
-        // console.info("onrender facts 1")
+        // console.info("onrender facts 1 " + arToolkitSource.domElement)
         arToolkitContext.update( arToolkitSource.domElement )
     })
     
@@ -150,9 +146,17 @@
         lerpQuaternion: 0.3,
         lerpScale: 1,
     })
+    var lastPosition = 0
     onRenderFcts.push(function(delta){
-        // console.info("onrender facts 2 " + delta)
+        
         smoothedControls.update(markerRoot)
+        if(  markerRoot.position.x != lastPosition) {
+            lastPosition = markerRoot.position.x
+            //console.info(artoolkitMarker.type)
+            //console.info(artoolkitMarker.patternUrl)
+            console.info(markerRoot.position)
+        }
+        //console.info("onrender facts 2 " + markerRoot.position.x + " : "+ markerRoot.patternUrl+ " : "+ markerRoot.)
     })
     //////////////////////////////////////////////////////////////////////////////////
     //      add an object in the scene

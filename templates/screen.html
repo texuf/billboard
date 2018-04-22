@@ -49,11 +49,6 @@ hiroImage.src = 'static/images/hiro.png';
 function updateARCode(){
         var urlQrCode = "${qr_code}$"
         
-        
-        var parameters = {
-            urlQrCode : urlQrCode
-        }
-        
         // generate the ar-code canvas
         generateArCodeCanvas(canvas, urlQrCode, function onReady(){
             console.log('ar-code generated for', urlQrCode)
