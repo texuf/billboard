@@ -98,16 +98,14 @@ def leader():
     return render_template('leader.html')
 
 
-@app.route('/follower')
-def follower():
-    return render_template('follower.html', follower_id=request.cookies.get('followerID'))
-
 @app.route('/followerID')
 def follower_id():
     follower_id = shortuuid.uuid()
-    resp = render_template('followerID.html', follower_id=follower_id)
-    resp.set_cookie('followerID', follower_id)
-    return resp
+    return render_template('followerID.html', follower_id=follower_id)
+
+@app.route('/follower/<id>')
+def follower(id):
+    return render_template('follower.html', follower_id=id)
 
 @app.route('/reader')
 def reader():
