@@ -45,7 +45,7 @@ hiroImage.onload = function() {
         console.log('hiro image loaded')
         updateARCode()
 }
-hiroImage.src = 'static/images/hiro.png';
+hiroImage.src = "${url_for('static', filename='images/hiro.png')}$";
 
 function updateARCode(){
         var urlQrCode = "${qr_code}$"
@@ -100,8 +100,8 @@ function generateQrCodeImage(text, onLoaded){
 }
 
     </script>
-    <script type="text/javascript" src="static/js/jquery-2.0.3.min.js"></script>
-    <script type="text/javascript" src="static/js/reconnecting-websocket.min.js"></script>
-    <script type="text/javascript" src="static/js/application.js"></script>
+    <script type="text/javascript" src="${url_for('static', filename='js/jquery-2.0.3.min.js')}$"></script>
+    <script type="text/javascript" src="${url_for('static', filename='js/reconnecting-websocket.min.js')}$"></script>
+    <script type="text/javascript" src="${url_for('static', filename='js/application.js')}$"></script>
 </body>
 </html>
