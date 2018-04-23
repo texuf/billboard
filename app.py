@@ -93,18 +93,25 @@ chats.start()
 def hello():
     return render_template('index.html')
 
-@app.route('/controller')
-def controller():
-    return render_template('controller.html')
+@app.route('/leader')
+def leader():
+    return render_template('leader.html')
 
 
-@app.route('/screen')
-def screen():
-    return render_template('screen.html', qr_code=shortuuid.uuid())
+@app.route('/follower')
+def follower():
+    return render_template('follower.html', follower_id=request.cookies.get('followerID'))
 
-@app.route('/screen2')
-def screen2():
-    return render_template('screen2.html', qr_code=shortuuid.uuid())
+@app.route('/followerID')
+def follower_id():
+    follower_id = shortuuid.uuid()
+    resp = render_template('followerID.html', follower_id=follower_id)
+    resp.set_cookie('followerID', follower_id)
+    return resp
+
+@app.route('/reader')
+def reader():
+    return render_template('reader.html')
 
 
 @sockets.route('/submit')

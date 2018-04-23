@@ -2,14 +2,22 @@
 Billboards
 Check it out: https://protected-island-17148.herokuapp.com
 
-### Todo
-* Controller
-  * print qr code value 
-  * print position info of qr code on screen (https://www.3dgep.com/understanding-the-view-matrix/)
-  * remove billboard header
-  * transimt value and position information to backend
-  * translate qr code locations into points on a plane
-  * transition to image view, allow panning and zooming
+### TODO
+
+* TODO
+  * [follower] request qr_code_id from service
+  * [follower] subscribe to any messages routed to qr_code_id
+  * [follower] draw image representing qr_code_id on screen
+  * [lead] recognize qr code in scene
+  * [lead] dispatch qr_code_id to display marker_id
+  * [follower] display marker_id
+  * [lead] detect marker in scene
+  * [lead] finally learn matrix multiplication (https://www.3dgep.com/understanding-the-view-matrix/)
+  * [lead] map coordinates to plane, preview that plane in scene
+  * [lead] send a stupid amount of messages to followers about all kinds of things including which part of a particular image to display how and when and occasionally when to re calibrate 
+
+
+
 * Screen
   * subscribe to backend
   * replace qr code with image 
