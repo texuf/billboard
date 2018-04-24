@@ -146,16 +146,30 @@
         lerpQuaternion: 0.3,
         lerpScale: 1,
     })
-    var lastPosition = 0
+    // var lastPosition = 0
+    // var hasDoneTheThing = false // shity temp state management
+    // var newThing = {}
     onRenderFcts.push(function(delta){
-        
         smoothedControls.update(markerRoot)
+        /*
+        if (!hasDoneTheThing && artoolkitMarker.object3d.visible) {
+            hasDoneTheThing = true
+            newThing = markerRoot.clone()
+            console.info("cloned!", newThing)
+            smoothedControls.update(newThing)
+        } else if (hasDoneTheThing) {
+            smoothedControls.update(newThing)
+        } else {
+            smoothedControls.update(markerRoot)
+        }
+        console.info("on render", artoolkitMarker.object3d.visible)
         if(  markerRoot.position.x != lastPosition) {
             lastPosition = markerRoot.position.x
+            console.info("Marker!")
             //console.info(artoolkitMarker.type)
             //console.info(artoolkitMarker.patternUrl)
             console.info(markerRoot.position)
-        }
+        } */
         //console.info("onrender facts 2 " + markerRoot.position.x + " : "+ markerRoot.patternUrl+ " : "+ markerRoot.)
     })
     //////////////////////////////////////////////////////////////////////////////////

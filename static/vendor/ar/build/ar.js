@@ -4901,7 +4901,7 @@ THREEx.ArMarkerControls.prototype._initArtoolkit = function(){
 
         // listen to the event
         arController.addEventListener('getMarker', function(event){
-            console.log("get marker")
+            // console.log("get marker")
             if( event.data.type === artoolkit.PATTERN_MARKER && _this.parameters.type === 'pattern' ){
                 if( artoolkitMarkerId === null )    return
                 if( event.data.marker.idPatt === artoolkitMarkerId ) onMarkerFound(event)
@@ -4919,8 +4919,8 @@ THREEx.ArMarkerControls.prototype._initArtoolkit = function(){
     }
 
     function onMarkerFound(event){
-        console.info("Marker found " + event.data.type + " : " + event.data.text)
-        console.info(event.data)
+        // aellis console.info("Marker found " + event.data.type + " : " + event.data.text)
+        // aellis console.info(event.data)
         // honor his.parameters.minConfidence
         if( event.data.type === artoolkit.PATTERN_MARKER && event.data.marker.cfPatt < _this.parameters.minConfidence ) return
         if( event.data.type === artoolkit.BARCODE_MARKER && event.data.marker.cfMatt < _this.parameters.minConfidence ) return
