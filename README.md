@@ -9,14 +9,18 @@ Check it out: https://protected-island-17148.herokuapp.com
   * [follower] subscribe to any messages routed to qr_code_id
   * [follower] draw image representing qr_code_id on screen
   * [lead] recognize qr code in scene
-  * [lead] dispatch qr_code_id to display marker_id
+  * [lead] tell follower with qr_code_id to display marker_id
   * [follower] display marker_id
   * [lead] detect marker in scene
   * [lead] finally learn matrix multiplication (https://www.3dgep.com/understanding-the-view-matrix/)
   * [lead] map coordinates to plane, preview that plane in scene
   * [lead] send a stupid amount of messages to followers about all kinds of things including which part of a particular image to display how and when and occasionally when to re calibrate 
 
-
+* In Progress
+  * Test - grab first measurement of the marker, then keep rendering the cube there, test resiliency 
+    * this causes me to lose the 3d position of my marker. because we are never calculating the camera angle, only the location of the marker,  I don't think I'll be able to keep updating it in the scene unless I continually track the token
+  * Test - wrap the code in leader so that I can create many instances of trackers that each track a different marker
+    * in progress
 
 * Screen
   * subscribe to backend
