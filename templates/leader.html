@@ -133,8 +133,8 @@
     var markerRoot = new THREE.Group
     scene.add(markerRoot)
     var artoolkitMarker = new THREEx.ArMarkerControls(arToolkitContext, markerRoot, {
-        type : 'unknown' //,
-        //patternUrl : THREEx.ArToolkitContext.baseURL + '../data/data/patt.hiro'
+        type : 'pattern',
+        patternUrl : THREEx.ArToolkitContext.baseURL + '../data/data/patt.hiro'
         // patternUrl : THREEx.ArToolkitContext.baseURL + '../data/data/patt.kanji'
     })
 
