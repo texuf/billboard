@@ -35,7 +35,7 @@
     //////////////////////////////////////////////////////////////////////////////////
 
     // init renderer
-    var renderer    = new THREE.WebGLRenderer({
+    var renderer = new THREE.WebGLRenderer({
         // antialias    : true,
         alpha: true
     });
@@ -48,10 +48,10 @@
     document.body.appendChild( renderer.domElement );
 
     // array of functions for the rendering loop
-    var onRenderFcts= [];
+    var onRenderFuncs = [];
 
     // init scene and camera
-    var scene   = new THREE.Scene();
+    var scene = new THREE.Scene();
     
     //////////////////////////////////////////////////////////////////////////////////
     //      Initialize a basic camera
@@ -67,35 +67,26 @@
 
     var arToolkitSource = new THREEx.ArToolkitSource({
         // to read from the webcam 
-        sourceType : 'webcam',
-
-        // to read from an image
-        // sourceType : 'image',
-        // sourceUrl : THREEx.ArToolkitContext.baseURL + '../data/images/img.jpg',      
-
-        // to read from a video
-        // sourceType : 'video',
-        // sourceUrl : THREEx.ArToolkitContext.baseURL + '../data/videos/headtracking.mp4',     
+        sourceType : 'webcam',   
     })
 
     arToolkitSource.init(function onReady(){
-        console.info("init!!!!")
         onResize()
     })
     
     // handle resize
     window.addEventListener('resize', function(){
-        console.info("resize1!!!!")
         onResize()
     })
+
     function onResize(){
-        console.info("resize2!!!!")
         arToolkitSource.onResize()  
         arToolkitSource.copySizeTo(renderer.domElement) 
         if( arToolkitContext.arController !== null ){
             arToolkitSource.copySizeTo(arToolkitContext.arController.canvas)    
         }   
     }
+
     ////////////////////////////////////////////////////////////////////////////////
     //          initialize arToolkitContext
     ////////////////////////////////////////////////////////////////////////////////
@@ -114,13 +105,12 @@
     })
     // initialize it
     arToolkitContext.init(function onCompleted(){
-        console.info("init 1")
         // copy projection matrix to camera
         camera.projectionMatrix.copy( arToolkitContext.getProjectionMatrix() );
     })
 
     // update artoolkit on every frame
-    onRenderFcts.push(function(){
+    onRenderFuncs.push(function(){
         
         if( arToolkitSource.ready === false )   return
         // console.info("onrender facts 1 " + arToolkitSource.domElement)
@@ -131,85 +121,82 @@
     ////////////////////////////////////////////////////////////////////////////////
     //          Create a ArMarkerControls
     ////////////////////////////////////////////////////////////////////////////////
-    
-    var markerRoot = new THREE.Group
-    scene.add(markerRoot)
-    var artoolkitMarker = new THREEx.ArMarkerControls(arToolkitContext, markerRoot, {
-        // type : 'pattern',
-        // patternUrl : THREEx.ArToolkitContext.baseURL + '../data/data/patt.hiro'
-        // patternUrl : THREEx.ArToolkitContext.baseURL + '../data/data/patt.kanji'
-        type: 'barcode',
-        barcodeValue: 1
-    })
+    class MarkerDetector {
+        constructor(markerId, scene) {
+            this.markerId = markerId
 
-    // build a smoothedControls
-    var smoothedRoot = new THREE.Group()
-    scene.add(smoothedRoot)
-    var smoothedControls = new THREEx.ArSmoothedControls(smoothedRoot, {
-        lerpPosition: 0.4,
-        lerpQuaternion: 0.3,
-        lerpScale: 1,
-    })
-    // var lastPosition = 0
-    // var hasDoneTheThing = false // shity temp state management
-    // var newThing = {}
-    onRenderFcts.push(function(delta){
-        smoothedControls.update(markerRoot)
-        /*
-        if (!hasDoneTheThing && artoolkitMarker.object3d.visible) {
-            hasDoneTheThing = true
-            newThing = markerRoot.clone()
-            console.info("cloned!", newThing)
-            smoothedControls.update(newThing)
-        } else if (hasDoneTheThing) {
-            smoothedControls.update(newThing)
-        } else {
-            smoothedControls.update(markerRoot)
+            this.markerRoot = new THREE.Group()
+            scene.add(this.markerRoot)
+            this.artoolkitMarker = new THREEx.ArMarkerControls(arToolkitContext, this.markerRoot, {
+                type: 'barcode',
+                barcodeValue: markerId
+            })
+
+            // build a smoothedControls
+            this.smoothedRoot = new THREE.Group()
+            scene.add(this.smoothedRoot)
+            this.smoothedControls = new THREEx.ArSmoothedControls(this.smoothedRoot, {
+                lerpPosition: 0.4,
+                lerpQuaternion: 0.3,
+                lerpScale: 1,
+            })
+
+            var arWorldRoot = this.smoothedRoot
+
+            // add a torus knot 
+            var geometry    = new THREE.CubeGeometry(1,1,1);
+            var material    = new THREE.MeshNormalMaterial({
+                transparent : true,
+                opacity: 0.5,
+                side: THREE.DoubleSide
+            }); 
+            var mesh    = new THREE.Mesh( geometry, material );
+            mesh.position.y = geometry.parameters.height/2
+            arWorldRoot.add( mesh );
+            
+            function geometryFor(markerId) {
+                var markerId = markerId % 3
+                if (markerId == 0) {
+                    return new THREE.TorusKnotGeometry(0.3,0.1,64,16);
+                } else if (markerId == 1) {
+                    return new THREE.CylinderGeometry(0.3,0.1,1,3.5); 
+                } else {
+                    return new THREE.PolyhedronGeometry(0.3,0.1,64,16); 
+                }
+            }
+            var geometry    = geometryFor(markerId)
+            var material    = new THREE.MeshNormalMaterial(); 
+            this.mesh    = new THREE.Mesh( geometry, material );
+            this.mesh.position.y = 0.5
+            arWorldRoot.add( this.mesh );
+            
         }
-        console.info("on render", artoolkitMarker.object3d.visible)
-        if(  markerRoot.position.x != lastPosition) {
-            lastPosition = markerRoot.position.x
-            console.info("Marker!")
-            //console.info(artoolkitMarker.type)
-            //console.info(artoolkitMarker.patternUrl)
-            console.info(markerRoot.position)
-        } */
-        //console.info("onrender facts 2 " + markerRoot.position.x + " : "+ markerRoot.patternUrl+ " : "+ markerRoot.)
+
+        update() {
+            // console.info("update marker detector", this.markerId)
+            this.smoothedControls.update(this.markerRoot)
+            this.mesh.rotation.x += 0.1
+        }
+    }
+
+    var detectors = [
+        new MarkerDetector(0, scene),
+        new MarkerDetector(1, scene)
+    ]
+
+    onRenderFuncs.push(function(delta){
+        detectors.forEach(function(detector){
+            detector.update()
+        })
     })
-    //////////////////////////////////////////////////////////////////////////////////
-    //      add an object in the scene
-    //////////////////////////////////////////////////////////////////////////////////
-
-    var arWorldRoot = smoothedRoot
-
-    // add a torus knot 
-    var geometry    = new THREE.CubeGeometry(1,1,1);
-    var material    = new THREE.MeshNormalMaterial({
-        transparent : true,
-        opacity: 0.5,
-        side: THREE.DoubleSide
-    }); 
-    var mesh    = new THREE.Mesh( geometry, material );
-    mesh.position.y = geometry.parameters.height/2
-    arWorldRoot.add( mesh );
     
-    var geometry    = new THREE.TorusKnotGeometry(0.3,0.1,64,16);
-    var material    = new THREE.MeshNormalMaterial(); 
-    var mesh    = new THREE.Mesh( geometry, material );
-    mesh.position.y = 0.5
-    arWorldRoot.add( mesh );
-    
-    onRenderFcts.push(function(){
-        mesh.rotation.x += 0.1
-    })
-
     //////////////////////////////////////////////////////////////////////////////////
     //      render the whole thing on the page
     //////////////////////////////////////////////////////////////////////////////////
     var stats = new Stats();
     document.body.appendChild( stats.dom );
     // render the scene
-    onRenderFcts.push(function(){
+    onRenderFuncs.push(function(){
         //console.info("onrender facts 3")
         renderer.render( scene, camera );
         stats.update();
@@ -225,7 +212,7 @@
         var deltaMsec   = Math.min(200, nowMsec - lastTimeMsec)
         lastTimeMsec    = nowMsec
         // call each update function
-        onRenderFcts.forEach(function(onRenderFct){
+        onRenderFuncs.forEach(function(onRenderFct){
             //console.info("onrender facts 5")
             onRenderFct(deltaMsec/1000, nowMsec/1000)
         })
