@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-        <title>Screen ${qr_code}$</title>
+        <title>Follower ${marker_id}$</title>
         <!-- thanks https://jeromeetienne.github.io/AR.js/three.js/examples/arcode.html -->
         <!--Import materialize.css-->
         <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css"  media="screen,projection"/>
@@ -15,7 +15,7 @@
 </head>
 
 <body>
-    <p>${qr_code}$</p>
+    
         <div id="qrcodeCanvasWrapper" style="position: absolute; top: 0; right: 0; bottom: 0; left: 0;">
                 <div class="valign-wrapper">
                         <div id='arcode-container' class="valign center" style="width: 100%;" ></div>
@@ -45,10 +45,10 @@ hiroImage.onload = function() {
         console.log('hiro image loaded')
         updateARCode()
 }
-hiroImage.src = "${url_for('static', filename='images/hiro.png')}$";
+hiroImage.src = "${url_for('static', filename='images/3x3/%s.png' % marker_id)}$";
 
 function updateARCode(){
-        var urlQrCode = "${qr_code}$"
+        var urlQrCode = "" // legacy bs, todo remove and just use the image
         
         // generate the ar-code canvas
         generateArCodeCanvas(canvas, urlQrCode, function onReady(){

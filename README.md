@@ -17,10 +17,11 @@ Check it out: https://protected-island-17148.herokuapp.com
   * [lead] send a stupid amount of messages to followers about all kinds of things including which part of a particular image to display how and when and occasionally when to re calibrate 
 
 * In Progress
-  * Test - grab first measurement of the marker, then keep rendering the cube there, test resiliency 
+  * [X] Test - grab first measurement of the marker, then keep rendering the cube there, test resiliency 
     * this causes me to lose the 3d position of my marker. because we are never calculating the camera angle, only the location of the marker,  I don't think I'll be able to keep updating it in the scene unless I continually track the token
-  * Test - wrap the code in leader so that I can create many instances of trackers that each track a different marker
-    * in progress
+  * [ ] Switch to barcodes, try out the 3x3 markers downloaded from https://github.com/artoolkit/artoolkit5/tree/master/doc/patterns
+  * [ ] Test - wrap the code in leader so that I can create many instances of trackers that each track a different marker
+  * [ ] investigate multi markers, pretty sure that's what i want to do - https://github.com/jeromeetienne/AR.js/tree/master/three.js/examples/multi-markers
 
 * Screen
   * subscribe to backend
@@ -86,6 +87,8 @@ Check it out: https://protected-island-17148.herokuapp.com
 * [redis pubsub demp](https://gist.github.com/pietern/348262)
 * https://github.com/heroku-examples/python-websockets-chat/blob/master/chat.py
 
+### Extra special thanks
+* https://github.com/jeromeetienne
 
 ### Examples//Links
 * http://www.metablocks.com/2012/07/qr-code-art-examples-2/

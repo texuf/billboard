@@ -103,9 +103,9 @@ def follower_id():
     follower_id = shortuuid.uuid()
     return render_template('followerID.html', follower_id=follower_id)
 
-@app.route('/follower/<id>')
-def follower(id):
-    return render_template('follower.html', follower_id=id)
+@app.route('/follower/<marker_id>')
+def follower(marker_id):
+    return render_template('follower.html', marker_id=marker_id)
 
 @app.route('/reader')
 def reader():
