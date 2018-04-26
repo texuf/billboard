@@ -25,6 +25,12 @@ Check it out: https://protected-island-17148.herokuapp.com
     * works great!
   * [X] Test - wrap the code in leader so that I can create many instances of trackers that each track a different marker
     * works great!
+  * [X] Test - will two MarkerDetector instances render images at the same time
+    * from laptop - load controller screen with two hard coded detectors, 0 and 1
+    * open follower/0 from phone 1
+    * open follower/1 from phone 2
+    * test if the controller will read both controllers at the same time
+    * IT WORKS ! I can register up to 64 different codes. I expect that if the codes are stable it won't be an issue to recognize at least a subset of them. 
   * [ ] Run qr code reader and marker detector on the same scene?
   * [ ] investigate multi markers, pretty sure that's close to what i want to do - https://github.com/jeromeetienne/AR.js/tree/master/three.js/examples/multi-markers
 
