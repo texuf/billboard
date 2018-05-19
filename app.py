@@ -109,10 +109,10 @@ def leader():
 
 @app.route('/follower')
 def follower():
-    qr_code_id = make_follower_id()
-    return render_template('follower.html', qr_code=qr_code_id, qr_code_id=qr_code_id)
+    follower_id = make_follower_id()
+    return render_template('follower.html', qr_code=follower_id, follower_id=follower_id)
 
-# for testing qr_code_ids
+# for testing follower_ids
 @app.route('/followerID')
 def follower_id():
     return render_template('followerID.html', qr_code=make_follower_id())
@@ -128,6 +128,7 @@ def reader():
     return render_template('reader.html')
 
 
+
 @sockets.route('/submit')
 def inbox(ws):
     """Receives incoming chat messages, inserts them into Redis."""
@@ -135,7 +136,7 @@ def inbox(ws):
         # Sleep to prevent *constant* context-switches.
         gevent.sleep(0.1)
         message = ws.receive()
-        channel = json.loads(message).get('handle', GLOBAL_CHANNEL) 
+        channel = json.loads(message).get('channel', GLOBAL_CHANNEL) 
         if message:
             app.logger.info('Inserting message: {} on channel {}'.format(message, channel))
             redis.publish(channel, message)

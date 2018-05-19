@@ -14,15 +14,46 @@
   <body>
     
     <div class="container" style="z-index: 2; position: relative">
-      <form id="input-form" class="form-inline">
+
+      <form id="input-form-marker" class="form-inline">
         <div class="form-group">
-          <input id="input-handle" type="text" class="form-control" placeholder="Enter handle" autofocus />
+          <input id="input-follower" type="text" class="form-control" placeholder="Follower ID" autofocus />
         </div>
         <div class="form-group">
-          <input id="input-text" type="text" class="form-control" placeholder="Enter chat text here!" autofocus />
+          <input id="input-marker" type="text" class="form-control" placeholder="Marker #" autofocus />
         </div>
         <button class="btn btn-primary" type="submit">Send</button>
       </form>
+
+      <form id="input-form-image" class="form-inline">
+        <div class="form-group">
+          <input id="input-follower" type="text" class="form-control" placeholder="Follower ID" autofocus />
+        </div>
+        <div class="form-group">
+          <input id="input-url" type="text" class="form-control" placeholder="Image url" autofocus />
+        </div>
+        <button class="btn btn-primary" type="submit">Send</button>
+      </form>
+
+      <form id="input-form-position" class="form-inline">
+        <div class="form-group">
+          <input id="input-follower" type="text" class="form-control" placeholder="Follower ID" autofocus />
+        </div>
+        <div class="form-group">
+          <input id="input-x" type="text" class="form-control" placeholder="X (0-1)" autofocus />
+        </div>
+        <div class="form-group">
+          <input id="input-y" type="text" class="form-control" placeholder="Y (0-1)" autofocus />
+        </div>
+        <div class="form-group">
+          <input id="input-width" type="text" class="form-control" placeholder="Width (0-1)" autofocus />
+        </div>
+        <div class="form-group">
+          <input id="input-height" type="text" class="form-control" placeholder="Height (0-1)" autofocus />
+        </div>
+        <button class="btn btn-primary" type="submit">Send</button>
+      </form>
+      
       <div class="page-header">
         <h1>Chat Log</h1>
       </div>

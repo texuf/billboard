@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Screen ${qr_code_id}$</title>
+<title>Screen ${follower_id}$</title>
 <!-- thanks https://github.com/jeromeetienne/jquery-qrcode/blob/master/examples/basic.html !!! -->
 </head>
 <body>
@@ -23,9 +23,9 @@
 
     <script type="text/javascript" src="${url_for('static', filename='js/jquery-2.0.3.min.js')}$"></script>
     <script type="text/javascript" src="${url_for('static', filename='js/reconnecting-websocket.min.js')}$"></script>
-    <script type="text/javascript" src="${url_for('static', filename='js/subscription.js')}$"></script>
+    <script type="text/javascript" src="${url_for('static', filename='js/subscriptions.js')}$"></script>
     <script>
-        var subscription = new Subscription("${qr_code_id}$")
+        subscriptions.add("${follower_id}$")
     </script>
 </body>
 </html>

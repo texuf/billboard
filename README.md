@@ -5,12 +5,12 @@ Check it out: https://protected-island-17148.herokuapp.com
 ### Architecture 
 
 * [follower] request `qr_code` from service
-  * `qr_code` is composed of `leader_url/qr_code_id`
-  * `qr_code_id` can be obtained by `qr_code.split('/').last!`
-* [follower] subscribe to any messages routed to `qr_code_id`
+  * `qr_code` is composed of `site_url/follower_id`
+  * `follower_id` can be obtained by `qr_code.split('/').last!`
+* [follower] subscribe to any messages routed to `follower_id`
 * [follower] draw image representing `qr_code` on screen
 * [leader] recognize qr code in scene
-* [leader] route message to `qr_code_id` requesting follower to display specific `marker_id`
+* [leader] route message to `follower_id` requesting follower to display specific `marker_id`
 * [follower] display marker associated with `marker_id`
 * [leader] detect marker in scene
 * [leader] rinse wash repeat (continue to detect qr codes)
@@ -33,6 +33,12 @@ Check it out: https://protected-island-17148.herokuapp.com
   * test if the controller will read both controllers at the same time
   * IT WORKS ! I can register up to 64 different codes. I expect that if the codes are stable it won't be an issue to recognize at least a subset of them. 
 * [ ] Open multiple browser windows displaying follower qr_codes, scan the qr codes with leader url on phone, qr codes switch to ar codes
+  * [X] have followers subscribe to their follower_ids
+  * [X] allow leaders to send messages to follower_id
+  * [ ] create message types (backend is type agnostic, only required field is channel)
+    * [ ] type=marker index=[0-63]
+    * [ ] type=image url="..."
+    * [ ] type=position x=[0-1] y=[0-1] width=[0-1] height=[0-1]
 * [ ] Run qr code reader and marker detector on the same scene?
 * [ ] investigate multi markers, pretty sure that's close to what i want to do - https://github.com/jeromeetienne/AR.js/tree/master/three.js/examples/multi-markers
 
