@@ -13,7 +13,7 @@ import shortuuid
 
 REDIS_URL = os.environ['REDIS_URL']
 DEBUG = 'DEBUG' in os.environ
-REDIS_CHAN = 'chat'
+GLOBAL_CHANNEL = 'chat'
 
 
 redis = redis.from_url(REDIS_URL)
@@ -47,21 +47,27 @@ class ChatBackend(object):
     """Interface for registering and updating WebSocket clients."""
 
     def __init__(self):
-        self.clients = list()
+        self.clients = {}
         self.pubsub = redis.pubsub()
-        self.pubsub.subscribe(REDIS_CHAN)
+        self.pubsub.subscribe(GLOBAL_CHANNEL) # if we don't add a subscription here, no additional subscription will fire aellis 5/19/2018
 
     def __iter_data(self):
         for message in self.pubsub.listen():
-            # app.logger.info('message %s' % message)
+            app.logger.info('message %s' % message)
             data = message.get('data')
+            channel = message.get('channel')
             if message['type'] == 'message':
-                # app.logger.info('Sending message: {}'.format(data))
-                yield data
+                app.logger.info('Sending message: {}'.format(data))
+                yield (channel, data)
 
-    def register(self, client):
+    def register(self, channel, client):
         """Register a WebSocket connection for Redis updates."""
-        self.clients.append(client)
+        if channel not in self.clients:
+            app.logger.info('Subscribing to channel: {}'.format(channel))
+            self.pubsub.subscribe(channel)
+            self.clients[channel] = [client]
+        else:
+            self.clients[channel].append(client)
 
     def send(self, client, data):
         """Send given data to the registered client.
@@ -73,11 +79,15 @@ class ChatBackend(object):
 
     def run(self):
         """Listens for new messages in Redis, and sends them to clients."""
-        for data in self.__iter_data():
+        app.logger.info("run")
+        for (channel, data) in self.__iter_data():
             data = data.decode("utf-8")
-            app.logger.info('Sending message: {} to {} clients'.format(data, len(self.clients)))
-            for client in self.clients:
+            channel = channel.decode("utf-8")
+            clients = self.clients.get(channel, [])
+            app.logger.info('Sending message: {} on channel: {} to {} clients'.format(data, channel, len(clients)))
+            for client in clients:
                 gevent.spawn(self.send, client, data)
+        app.logger.info("run-exit")
 
     def start(self):
         """Maintains Redis subscription in the background."""
@@ -97,11 +107,15 @@ def hello():
 def leader():
     return render_template('leader.html')
 
+@app.route('/follower')
+def follower():
+    qr_code_id = make_follower_id()
+    return render_template('follower.html', qr_code=qr_code_id, qr_code_id=qr_code_id)
+
 # for testing qr_code_ids
 @app.route('/followerID')
 def follower_id():
-    follower_id = shortuuid.uuid()
-    return render_template('followerID.html', follower_id=follower_id)
+    return render_template('followerID.html', qr_code=make_follower_id())
 
 # for testing markers
 @app.route('/follower/<marker_id>')
@@ -121,15 +135,29 @@ def inbox(ws):
         # Sleep to prevent *constant* context-switches.
         gevent.sleep(0.1)
         message = ws.receive()
-
+        channel = json.loads(message).get('handle', GLOBAL_CHANNEL) 
         if message:
-            # app.logger.info('Inserting message: {}'.format(message))
-            redis.publish(REDIS_CHAN, message)
+            app.logger.info('Inserting message: {} on channel {}'.format(message, channel))
+            redis.publish(channel, message)
 
 @sockets.route('/receive')
 def outbox(ws):
     """Sends outgoing chat messages, via `ChatBackend`."""
-    chats.register(ws)
+
+    channel = GLOBAL_CHANNEL
+    app.logger.info('Receive on channel: {}'.format(channel))
+    chats.register(channel, ws)
+
+    while not ws.closed:
+        # Context switch while `ChatBackend.start` is running in the background.
+        gevent.sleep(0.1)
+
+@sockets.route('/receive/<channel>')
+def outbox(ws, channel):
+    """Sends outgoing chat messages, via `ChatBackend`."""
+
+    app.logger.info('Receive on channel: {}'.format(channel))
+    chats.register(channel, ws)
 
     while not ws.closed:
         # Context switch while `ChatBackend.start` is running in the background.
@@ -151,3 +179,6 @@ def after_request(response):
                       request.full_path,
                       response.status)
     return response
+
+def make_follower_id():
+    return shortuuid.uuid()[:7] # use first 7 digits of shortuuid, should be enough :)
