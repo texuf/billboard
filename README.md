@@ -2,42 +2,39 @@
 Billboards
 Check it out: https://protected-island-17148.herokuapp.com
 
-### TODO
+### Architecture 
 
-* TODO
-  * [follower] request qr_code_id from service
-  * [follower] subscribe to any messages routed to qr_code_id
-  * [follower] draw image representing qr_code_id on screen
-  * [lead] recognize qr code in scene
-  * [lead] route message to qr_code_id requesting follower to display specific marker_id
-  * [follower] display marker_id
-  * [lead] detect marker in scene
-  * [lead] rinse wash repeat (continue to detect qr codes)
-  * [lead] press button to capture all positions of markers
-  * [lead] finally learn matrix multiplication (https://www.3dgep.com/understanding-the-view-matrix/)
-  * [lead] map coordinates to plane, preview that plane in scene
-  * [lead] send a stupid amount of messages to followers about all kinds of things including which part of a particular image to display how and when and occasionally when to re-calibrate 
+* [follower] request `qr_code` from service
+  * `qr_code` is composed of `leader_url/qr_code_id`
+  * `qr_code_id` can be obtained by `qr_code.split('/').last!`
+* [follower] subscribe to any messages routed to `qr_code_id`
+* [follower] draw image representing `qr_code` on screen
+* [leader] recognize qr code in scene
+* [leader] route message to `qr_code_id` requesting follower to display specific `marker_id`
+* [follower] display marker associated with `marker_id`
+* [leader] detect marker in scene
+* [leader] rinse wash repeat (continue to detect qr codes)
+* [leader] press button to capture all positions of markers
+* [leader] finally learn matrix multiplication (https://www.3dgep.com/understanding-the-view-matrix/)
+* [leader] map coordinates to plane, preview that plane in scene
+* [leader] send a stupid amount of messages to followers about all kinds of things including which part of a particular image to display how and when and occasionally when to re-calibrate 
 
-* In Progress
-  * [X] Test - grab first measurement of the marker, then keep rendering the cube there, test resiliency 
-    * this causes me to lose the 3d position of my marker. because we are never calculating the camera angle, only the location of the marker,  I don't think I'll be able to keep updating it in the scene unless I continually track the token
-  * [X] Switch to barcodes, try out the 3x3 markers downloaded from https://github.com/artoolkit/artoolkit5/tree/master/doc/patterns
-    * works great!
-  * [X] Test - wrap the code in leader so that I can create many instances of trackers that each track a different marker
-    * works great!
-  * [X] Test - will two MarkerDetector instances render images at the same time
-    * from laptop - load controller screen with two hard coded detectors, 0 and 1
-    * open follower/0 from phone 1
-    * open follower/1 from phone 2
-    * test if the controller will read both controllers at the same time
-    * IT WORKS ! I can register up to 64 different codes. I expect that if the codes are stable it won't be an issue to recognize at least a subset of them. 
-  * [ ] Run qr code reader and marker detector on the same scene?
-  * [ ] investigate multi markers, pretty sure that's close to what i want to do - https://github.com/jeromeetienne/AR.js/tree/master/three.js/examples/multi-markers
+### TODO / In Progress
+* [X] Test - grab first measurement of the marker, then keep rendering the cube there, test resiliency 
+  * this causes me to lose the 3d position of my marker. because we are never calculating the camera angle, only the location of the marker,  I don't think I'll be able to keep updating it in the scene unless I continually track the token
+* [X] Switch to barcodes, try out the 3x3 markers downloaded from https://github.com/artoolkit/artoolkit5/tree/master/doc/patterns
+  * works great!
+* [X] Test - wrap the code in leader so that I can create many instances of trackers that each track a different marker
+  * works great!
+* [X] Test - will two MarkerDetector instances render images at the same time
+  * from laptop - load controller screen with two hard coded detectors, 0 and 1
+  * open follower/0 from phone 1
+  * open follower/1 from phone 2
+  * test if the controller will read both controllers at the same time
+  * IT WORKS ! I can register up to 64 different codes. I expect that if the codes are stable it won't be an issue to recognize at least a subset of them. 
+* [ ] Run qr code reader and marker detector on the same scene?
+* [ ] investigate multi markers, pretty sure that's close to what i want to do - https://github.com/jeromeetienne/AR.js/tree/master/three.js/examples/multi-markers
 
-* Screen
-  * subscribe to backend
-  * replace qr code with image 
-  * position image on screen  
 
 ### Prerequisits
 
