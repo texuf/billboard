@@ -97,16 +97,18 @@ def hello():
 def leader():
     return render_template('leader.html')
 
-
+# for testing qr_code_ids
 @app.route('/followerID')
 def follower_id():
     follower_id = shortuuid.uuid()
     return render_template('followerID.html', follower_id=follower_id)
 
+# for testing markers
 @app.route('/follower/<marker_id>')
-def follower(marker_id):
-    return render_template('follower.html', marker_id=marker_id)
+def followerMarker(marker_id):
+    return render_template('followerMarker.html', marker_id=marker_id)
 
+# standalone qr code reader
 @app.route('/reader')
 def reader():
     return render_template('reader.html')
