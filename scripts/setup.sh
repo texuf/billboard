@@ -1,8 +1,13 @@
 #!/bin/bash
-echo: "info: Setting up..."
-# install redis dependency
+echo "info: Setting up..."
+# check python dependency
 if ! [ -x "$(command -v python3)" ]; then
-    echo "python3 required, check readme.md"
+    echo "python3 required, check prerequisits section of readme.md"
+    exit
+fi
+# check brew dependency
+if ! [ -x "$(command -v brew)" ]; then
+    echo "brew required, check prerequisits section of readme.md"
     exit
 fi
 # install redis dependency
