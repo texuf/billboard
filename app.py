@@ -16,9 +16,16 @@ DEBUG = 'DEBUG' in os.environ
 GLOBAL_CHANNEL = 'chat'
 
 
+# setup redis
 redis = redis.from_url(REDIS_URL)
+
+# setup app
 app = Flask(__name__)
+app.debug = DEBUG
+
+# ssl yes!
 sslify = SSLify(app)
+
 # switch up our jinja options so that they don't conflict with view
 jinja_options = app.jinja_options.copy()
 jinja_options.update(dict(
@@ -30,7 +37,8 @@ jinja_options.update(dict(
     comment_end_string='#$', # was #}
 ))
 app.jinja_options = jinja_options
-app.debug = DEBUG
+
+# setup sockets
 sockets = Sockets(app)
 
 #add logging
@@ -40,8 +48,8 @@ if not DEBUG:
         '%(asctime)s %(levelname)s: %(message)s '
         '[in %(pathname)s:%(lineno)d]'))
     app.logger.addHandler(log_handler)
-
 app.logger.setLevel(logging.DEBUG)
+
 
 class ChatBackend(object):
     """Interface for registering and updating WebSocket clients."""
@@ -127,8 +135,6 @@ def followerMarker(marker_id):
 def reader():
     return render_template('reader.html')
 
-
-
 @sockets.route('/submit')
 def inbox(ws):
     """Receives incoming chat messages, inserts them into Redis."""
@@ -136,7 +142,7 @@ def inbox(ws):
         # Sleep to prevent *constant* context-switches.
         gevent.sleep(0.1)
         message = ws.receive()
-        channel = json.loads(message).get('channel', GLOBAL_CHANNEL) 
+        channel = get_channel(message)
         if message:
             app.logger.info('Inserting message: {} on channel {}'.format(message, channel))
             redis.publish(channel, message)
@@ -181,5 +187,12 @@ def after_request(response):
                       response.status)
     return response
 
+def get_channel(message):
+    try:
+        return json.loads(message).get('channel', GLOBAL_CHANNEL)
+    except:
+        return GLOBAL_CHANNEL
+
 def make_follower_id():
     return shortuuid.uuid()[:7] # use first 7 digits of shortuuid, should be enough :)
+
