@@ -1,6 +1,6 @@
 #!/bin/bash
 if ! [ -x "$(command -v heroku)" ]; then
-    echo "heroku cli required, check readme.md"
+    echo "heroku cli required, check prerequisits section of readme.md"
     exit
 fi
 # switch to venv
