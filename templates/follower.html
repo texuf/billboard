@@ -18,10 +18,9 @@
 
 
     <script>
-        //jQuery('#qrcode').qrcode("this plugin is great");
+        // display our qr code!
         jQuery('#qrcodeCanvas').qrcode({
             text    : "${qr_code}$",
-    <script type="text/javascript" src="${url_for('static', filename='js/jquery-2.0.3.min.js')}$"></script>
             width   : Math.min(document.getElementById('qrcodeCanvasWrapper').offsetHeight - 5, document.getElementById('qrcodeCanvasWrapper').offsetWidth),
             height  : Math.min(document.getElementById('qrcodeCanvasWrapper').offsetHeight - 5, document.getElementById('qrcodeCanvasWrapper').offsetWidth)
         }); 
@@ -29,23 +28,10 @@
 
 
     <script type="text/javascript" src="${url_for('static', filename='js/reconnecting-websocket.min.js')}$"></script>
-    <script type="text/javascript" src="${url_for('static', filename='js/subscriptions.js')}$"></script>
+    <script type="text/javascript" src="${url_for('static', filename='js/follower.js')}$"></script>
     <script>
-        subscriptions.add("${follower_id}$", function(message) {
-            switch (message.type) {
-                case "marker":
-                    console.log("got message to display marker", message.marker)
-                    break
-                case "image":
-                    console.log("got message to display image", message.image)
-                    break
-                case "position":
-                    console.log("got message to display position", message.x, message.y, message.width, message.height)
-                    break
-                default:
-                    console.error("got unknown message type", message)
-            }
-        })
+        //follower.add("${follower_id}$")
+        follower.subscribe("yrkZuJX")
     </script>
     <script type="text/javascript" src="${url_for('static', filename='js/chat.js')}$"></script>
 </body>
