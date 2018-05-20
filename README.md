@@ -40,6 +40,7 @@ Check it out: https://protected-island-17148.herokuapp.com
     * [X] type=marker index=[0-63]
     * [X] type=image url="..."
     * [X] type=position x=[0-1] y=[0-1] width=[0-1] height=[0-1]
+* [ ] Give license a name
 * [ ] Run qr code reader and marker detector on the same scene?
 * [ ] investigate multi markers, pretty sure that's close to what i want to do - https://github.com/jeromeetienne/AR.js/tree/master/three.js/examples/multi-markers
 * [ ] possibly combine image an position messages
