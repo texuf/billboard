@@ -10,7 +10,7 @@
     <script type="text/javascript" src="static/vendor/jeromeetinne/jquery-qrcode/jquery.qrcode.js"></script>
     <script type="text/javascript" src="static/vendor/jeromeetinne/jquery-qrcode/qrcode.js"></script>
 
-    <div id="qrcodeCanvasWrapper" style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; padding: 40px">
+    <div id="qrcodeCanvasWrapper" style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; padding: 60px">
            <div id="qrcodeCanvas" align="center"></div>
            <div id="arcode-container" align="center" ></div>
     </div> 
@@ -21,8 +21,8 @@
         // display our qr code!
         jQuery('#qrcodeCanvas').qrcode({
             text    : "${qr_code}$",
-            width   : Math.min(document.getElementById('qrcodeCanvasWrapper').offsetHeight - 80, document.getElementById('qrcodeCanvasWrapper').offsetWidth),
-            height  : Math.min(document.getElementById('qrcodeCanvasWrapper').offsetHeight - 80, document.getElementById('qrcodeCanvasWrapper').offsetWidth)
+            width   : Math.min(document.getElementById('qrcodeCanvasWrapper').offsetHeight - 120, document.getElementById('qrcodeCanvasWrapper').offsetWidth) - 120,
+            height  : Math.min(document.getElementById('qrcodeCanvasWrapper').offsetHeight - 120, document.getElementById('qrcodeCanvasWrapper').offsetWidth) - 120
         }); 
     </script>
 

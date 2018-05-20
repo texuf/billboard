@@ -3,7 +3,7 @@
 //                build canvas 
 //////////////////////////////////////////////////////////////////////////////
 console.log('screen size', document.getElementById('qrcodeCanvasWrapper').offsetWidth, document.getElementById('qrcodeCanvasWrapper').offsetHeight)
-var qrcodeSize = Math.min(document.getElementById('qrcodeCanvasWrapper').offsetWidth, document.getElementById('qrcodeCanvasWrapper').offsetHeight) - 80
+var qrcodeSize = Math.min(document.getElementById('qrcodeCanvasWrapper').offsetWidth, document.getElementById('qrcodeCanvasWrapper').offsetHeight) - 120
 var canvas = document.createElement('canvas');
 canvas.width  = qrcodeSize * 2;
 canvas.height = qrcodeSize * 2;
