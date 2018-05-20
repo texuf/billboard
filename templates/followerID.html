@@ -11,6 +11,8 @@
     <div id="qrcodeCanvasWrapper" style="position: absolute; top: 0; right: 0; bottom: 0; left: 0;">
            <div id="qrcodeCanvas" align="center"></div>
     </div> 
+    <div id="chat-text">
+    </div>
     <script>
         //jQuery('#qrcode').qrcode("this plugin is great");
         jQuery('#qrcodeCanvas').qrcode({
@@ -19,6 +21,6 @@
             height  : Math.min(document.getElementById('qrcodeCanvasWrapper').offsetHeight - 5, document.getElementById('qrcodeCanvasWrapper').offsetWidth)
         }); 
     </script>
-
+    <script type="text/javascript" src="${url_for('static', filename='js/chat.js')}$"></script>
 </body>
 </html>

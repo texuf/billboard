@@ -25,3 +25,12 @@ $("#input-form-position").on("submit", function(event) {
   var height   = $("#input-height")[0].value;
   outbox.send(JSON.stringify({ channel: follower, type:"position", x: x, y: y, width: width, height: height }));
 });
+
+
+$("#input-form-chat").on("submit", function(event) {
+  event.preventDefault();
+  var handle = $("#input-handle")[0].value;
+  var text   = $("#input-text")[0].value;
+  outbox.send(JSON.stringify({ handle: handle, text: text }));
+  $("#input-text")[0].value = "";
+});

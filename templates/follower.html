@@ -6,22 +6,28 @@
 </head>
 <body>
     <script type="text/javascript" src="static/js/jquery-2.0.3.min.js"></script>
+
     <script type="text/javascript" src="static/vendor/jeromeetinne/jquery-qrcode/jquery.qrcode.js"></script>
     <script type="text/javascript" src="static/vendor/jeromeetinne/jquery-qrcode/qrcode.js"></script>
+
     <div id="qrcodeCanvasWrapper" style="position: absolute; top: 0; right: 0; bottom: 0; left: 0;">
            <div id="qrcodeCanvas" align="center"></div>
     </div> 
+    <div id="chat-text">
+    </div>
+
+
     <script>
         //jQuery('#qrcode').qrcode("this plugin is great");
         jQuery('#qrcodeCanvas').qrcode({
             text    : "${qr_code}$",
+    <script type="text/javascript" src="${url_for('static', filename='js/jquery-2.0.3.min.js')}$"></script>
             width   : Math.min(document.getElementById('qrcodeCanvasWrapper').offsetHeight - 5, document.getElementById('qrcodeCanvasWrapper').offsetWidth),
             height  : Math.min(document.getElementById('qrcodeCanvasWrapper').offsetHeight - 5, document.getElementById('qrcodeCanvasWrapper').offsetWidth)
         }); 
     </script>
 
 
-    <script type="text/javascript" src="${url_for('static', filename='js/jquery-2.0.3.min.js')}$"></script>
     <script type="text/javascript" src="${url_for('static', filename='js/reconnecting-websocket.min.js')}$"></script>
     <script type="text/javascript" src="${url_for('static', filename='js/subscriptions.js')}$"></script>
     <script>
@@ -41,5 +47,6 @@
             }
         })
     </script>
+    <script type="text/javascript" src="${url_for('static', filename='js/chat.js')}$"></script>
 </body>
 </html>
