@@ -32,7 +32,8 @@ Check it out: https://protected-island-17148.herokuapp.com
   * open follower/1 from phone 2
   * test if the controller will read both controllers at the same time
   * IT WORKS ! I can register up to 64 different codes. I expect that if the codes are stable it won't be an issue to recognize at least a subset of them. 
-* [ ] Open multiple browser windows displaying follower qr_codes, scan the qr codes with leader url on phone, qr codes switch to ar codes
+* [X] Open multiple browser windows displaying follower qr_codes, scan the qr codes with leader url on phone, 
+* [ ] after detecting qr code, send message from leader to follower to swidth qr codes to ar codes
   * [X] have followers subscribe to their follower_ids
   * [X] allow leaders to send messages to follower_id
   * [X] create message types (backend is type agnostic, only required field is channel)
