@@ -78,7 +78,7 @@ function scanVideoNow(){
         qrcode.decode();
         var foundResult = true
     } catch(error) {
-        console.log('jsqrcode:', error);
+        //console.log('jsqrcode:', error);
         var foundResult = false
     }   
     return foundResult

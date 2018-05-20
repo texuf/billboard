@@ -41,6 +41,7 @@
 
     arToolkitSource.init(function onReady(){
         onResize()
+        parseQRCodes()
     })
     
     // handle resize
@@ -186,6 +187,52 @@
             onRenderFct(deltaMsec/1000, nowMsec/1000)
         })
     })
+
+//////////////////////////////////////////////////////////////////////////////
+// VIDEO PARSING
+//////////////////////////////////////////////////////////////////////////////
+function scanVideoNow(canvasEl, videoEl){
+    // dont scan if videoEl isnt yet initialized
+    if( videoEl.videoWidth === 0 )  return
+    var scale = 0.5
+    // console.time('capture');
+    var canvasEl = document.querySelector('#qr-canvas')
+    var context = canvasEl.getContext('2d');
+    // resize canvasEl
+    canvasEl.width = videoEl.videoWidth * scale;
+    canvasEl.height = videoEl.videoHeight * scale;
+    // draw videoEl on canvasEl
+    context.drawImage(videoEl, 0, 0, canvasEl.width, canvasEl.height);
+    // decode the canvas content
+    try {
+        qrcode.decode();
+        var foundResult = true
+    } catch(error) {
+        // console.log('jsqrcode:', error);
+        var foundResult = false
+    }   
+    return foundResult
+}
+
+
+function parseQRCodes() {
+  var canvasEl = document.createElement('canvas')
+  canvasEl.id = 'qr-canvas'   // KLUDGE by jsqrcode.js - forced to have this domID
+  canvasEl.style.display = 'none'
+  document.body.appendChild(canvasEl)
+  var videoEl = document.getElementsByTagName("video")[0];
+  //      init qrcode callback to received scanned result
+  qrcode.callback = function read(qrCodeValue){
+    console.log('read value', qrCodeValue)
+    
+  };
+
+  scanVideoNow(canvasEl, videoEl)
+  setInterval(function() {
+      scanVideoNow(canvasEl, videoEl)
+  }, 100);
+}
+
 
 
 $("#input-form-marker").on("submit", function(event) {
