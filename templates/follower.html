@@ -25,7 +25,21 @@
     <script type="text/javascript" src="${url_for('static', filename='js/reconnecting-websocket.min.js')}$"></script>
     <script type="text/javascript" src="${url_for('static', filename='js/subscriptions.js')}$"></script>
     <script>
-        subscriptions.add("${follower_id}$")
+        subscriptions.add("${follower_id}$", function(message) {
+            switch (message.type) {
+                case "marker":
+                    console.log("got message to display marker", message.marker)
+                    break
+                case "image":
+                    console.log("got message to display image", message.image)
+                    break
+                case "position":
+                    console.log("got message to display position", message.x, message.y, message.width, message.height)
+                    break
+                default:
+                    console.error("got unknown message type", message)
+            }
+        })
     </script>
 </body>
 </html>
