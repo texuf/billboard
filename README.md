@@ -35,12 +35,13 @@ Check it out: https://protected-island-17148.herokuapp.com
 * [ ] Open multiple browser windows displaying follower qr_codes, scan the qr codes with leader url on phone, qr codes switch to ar codes
   * [X] have followers subscribe to their follower_ids
   * [X] allow leaders to send messages to follower_id
-  * [ ] create message types (backend is type agnostic, only required field is channel)
-    * [ ] type=marker index=[0-63]
-    * [ ] type=image url="..."
-    * [ ] type=position x=[0-1] y=[0-1] width=[0-1] height=[0-1]
+  * [X] create message types (backend is type agnostic, only required field is channel)
+    * [X] type=marker index=[0-63]
+    * [X] type=image url="..."
+    * [X] type=position x=[0-1] y=[0-1] width=[0-1] height=[0-1]
 * [ ] Run qr code reader and marker detector on the same scene?
 * [ ] investigate multi markers, pretty sure that's close to what i want to do - https://github.com/jeromeetienne/AR.js/tree/master/three.js/examples/multi-markers
+* [ ] possibly combine image an position messages
 
 
 ### Prerequisits
