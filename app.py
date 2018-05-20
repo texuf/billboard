@@ -77,13 +77,13 @@ class ChatBackend(object):
         else:
             self.clients[channel].append(client)
 
-    def send(self, client, data):
+    def send(self, client, channel, data):
         """Send given data to the registered client.
         Automatically discards invalid connections."""
         try:
             client.send(data)
         except Exception:
-            self.clients.remove(client)
+            self.clients[channel].remove(client)
 
     def run(self):
         """Listens for new messages in Redis, and sends them to clients."""
@@ -94,7 +94,7 @@ class ChatBackend(object):
             clients = self.clients.get(channel, [])
             app.logger.info('Sending message: {} on channel: {} to {} clients'.format(data, channel, len(clients)))
             for client in clients:
-                gevent.spawn(self.send, client, data)
+                gevent.spawn(self.send, client, channel, data)
         app.logger.info("run-exit")
 
     def start(self):
