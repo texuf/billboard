@@ -12,10 +12,10 @@
 
     <div id="qrcodeCanvasWrapper" style="position: absolute; top: 0; right: 0; bottom: 0; left: 0;">
            <div id="qrcodeCanvas" align="center"></div>
+           <div id="arcode-container" align="center" ></div>
     </div> 
     <div id="chat-text">
     </div>
-
 
     <script>
         // display our qr code!
@@ -30,8 +30,7 @@
     <script type="text/javascript" src="${url_for('static', filename='js/reconnecting-websocket.min.js')}$"></script>
     <script type="text/javascript" src="${url_for('static', filename='js/follower.js')}$"></script>
     <script>
-        //follower.add("${follower_id}$")
-        follower.subscribe("yrkZuJX")
+        follower.initialize("${follower_id}$", "${url_for('static', filename='images/3x3/')}$")
     </script>
     <script type="text/javascript" src="${url_for('static', filename='js/chat.js')}$"></script>
 </body>
