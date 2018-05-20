@@ -126,7 +126,7 @@ def follower_id():
     return render_template('followerID.html', qr_code=make_follower_id())
 
 # for testing markers
-@app.route('/follower/<marker_id>')
+@app.route('/followerMarker/<marker_id>')
 def followerMarker(marker_id):
     return render_template('followerMarker.html', marker_id=marker_id)
 
