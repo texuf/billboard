@@ -91,7 +91,9 @@ onRenderFuncs.push(function() {
 //          Create a ArMarkerControls
 ////////////////////////////////////////////////////////////////////////////////
 class MarkerDetector {
-    constructor(markerId, scene) {
+    constructor(followerId, markerId, scene) {
+        console.log("New MarkerDetector", followerId, markerId, scene)
+        this.followerId = followerId
         this.markerId = markerId
 
         this.markerRoot = new THREE.Group()
@@ -148,10 +150,7 @@ class MarkerDetector {
     }
 }
 
-var detectors = [
-    new MarkerDetector(0, scene),
-    new MarkerDetector(1, scene)
-]
+var detectors = []
 
 onRenderFuncs.push(function(delta) {
     detectors.forEach(function(detector) {
@@ -205,12 +204,9 @@ function scanVideoNow(canvasEl, videoEl) {
     // decode the canvas content
     try {
         qrcode.decode();
-        var foundResult = true
     } catch (error) {
         // console.log('jsqrcode:', error);
-        var foundResult = false
     }
-    return foundResult
 }
 
 
@@ -222,27 +218,70 @@ function parseQRCodes() {
     var videoEl = document.getElementsByTagName("video")[0];
     //      init qrcode callback to received scanned result
     qrcode.callback = function read(qrCodeValue) {
-        console.log('read value', qrCodeValue)
+        onQrCodeFound(qrCodeValue)
 
     };
 
-    scanVideoNow(canvasEl, videoEl)
     setInterval(function() {
         scanVideoNow(canvasEl, videoEl)
     }, 100);
 }
 
+//////////////////////////////////////////////////////////////////////////////
+// The Good Stuff
+//////////////////////////////////////////////////////////////////////////////
 
+var currentMarkerId = 0
+var foundMarkers = new Set();
+
+function onQrCodeFound(qrCodeValue) {
+    if (foundMarkers.has(qrCodeValue)) {
+        return;
+    }
+    console.log("onQrCodeFound", foundMarkers)
+    foundMarkers.add(qrCodeValue)
+    var followerId = qrCodeValue;
+    var markerId = currentMarkerId;
+    currentMarkerId += 1
+    // create a detector
+    detectors.push(new MarkerDetector(followerId, markerId, scene));
+    // update the client
+    sendMarkerMessage(followerId, markerId);
+}
+
+
+function sendMarkerMessage(followerId, markerId) {
+    outbox.send(JSON.stringify({
+        channel: followerId,
+        type: "marker",
+        marker: markerId
+    }));
+}
+
+function sendImageMessage(followerId, image) {
+    outbox.send(JSON.stringify({
+        channel: followerId,
+        type: "image",
+        image: image
+    }));
+}
+
+function sendPositionMessage(followerId, x, y, width, height) {
+    outbox.send(JSON.stringify({
+        channel: followerId,
+        type: "position",
+        x: x,
+        y: y,
+        width: width,
+        height: height
+    }));
+}
 
 $("#input-form-marker").on("submit", function(event) {
     event.preventDefault();
     var follower = $("#input-follower")[0].value;
     var marker = $("#input-marker")[0].value;
-    outbox.send(JSON.stringify({
-        channel: follower,
-        type: "marker",
-        marker: marker
-    }));
+    sendMarkerMessage(follower, marker);
     // $("#input-marker")[0].value = "";
 });
 
@@ -251,11 +290,7 @@ $("#input-form-image").on("submit", function(event) {
     event.preventDefault();
     var follower = $("#input-follower")[0].value;
     var image = $("#input-image")[0].value;
-    outbox.send(JSON.stringify({
-        channel: follower,
-        type: "image",
-        image: image
-    }));
+    sendImageMessage(follower, image);
 });
 
 
@@ -266,14 +301,7 @@ $("#input-form-position").on("submit", function(event) {
     var y = $("#input-y")[0].value;
     var width = $("#input-width")[0].value;
     var height = $("#input-height")[0].value;
-    outbox.send(JSON.stringify({
-        channel: follower,
-        type: "position",
-        x: x,
-        y: y,
-        width: width,
-        height: height
-    }));
+    sendPositionMessage(follower, x, y, width, height);
 });
 
 
