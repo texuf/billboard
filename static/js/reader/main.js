@@ -5,7 +5,7 @@ var overlay = new Overlay()
 //      create canvasEl
 //////////////////////////////////////////////////////////////////////////////
 var canvasEl = document.createElement('canvas')
-canvasEl.id = 'qr-canvas'   // KLUDGE by jsqrcode.js - forced to have this domID
+canvasEl.id = 'qr-canvas' // KLUDGE by jsqrcode.js - forced to have this domID
 canvasEl.style.display = 'none'
 document.body.appendChild(canvasEl)
 
@@ -31,15 +31,15 @@ var userMediaConstraints = {
 }
 // Replace the source of the video element with the stream from the camera
 navigator.mediaDevices.getUserMedia(userMediaConstraints).then(function(stream) {
-    
+
     // TODO use videoEl.srcObject !== undefined to detect feature 
-    
+
     // var ua = navigator.userAgent.toLowerCase(); 
-    
-    if ( videoEl.srcObject === null ) { 
+
+    if (videoEl.srcObject === null) {
         videoEl.srcObject = stream;
     } else {
-        console.asset( !window.URL, 'window.URL isnt define ')
+        console.asset(!window.URL, 'window.URL isnt define ')
         var objUrl = window.URL.createObjectURL(stream);
     }
     videoEl.play();
@@ -50,9 +50,9 @@ navigator.mediaDevices.getUserMedia(userMediaConstraints).then(function(stream) 
 //////////////////////////////////////////////////////////////////////////////
 //      init qrcode callback to received scanned result
 //////////////////////////////////////////////////////////////////////////////
-qrcode.callback = function read(qrCodeValue){
+qrcode.callback = function read(qrCodeValue) {
     console.log('read value', qrCodeValue)
-    
+
     overlay.updateQRCodeValue(qrCodeValue)
     overlay.show()
 };
@@ -60,10 +60,10 @@ qrcode.callback = function read(qrCodeValue){
 /**
  * to scan the video now
  */
-function scanVideoNow(){
+function scanVideoNow() {
     // dont scan if videoEl isnt yet initialized
-    if( videoEl.videoWidth === 0 )  return
-    
+    if (videoEl.videoWidth === 0) return
+
     var scale = 0.5
     // console.time('capture');
     var canvasEl = document.querySelector('#qr-canvas')
@@ -77,10 +77,10 @@ function scanVideoNow(){
     try {
         qrcode.decode();
         var foundResult = true
-    } catch(error) {
+    } catch (error) {
         //console.log('jsqrcode:', error);
         var foundResult = false
-    }   
+    }
     return foundResult
 }
 

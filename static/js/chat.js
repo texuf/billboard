@@ -17,10 +17,10 @@ inbox.onmessage = function(message) {
   }, 800);
 };
 
-inbox.onclose = function(){
-    console.log('inbox reconnecting...');
+inbox.onclose = function() {
+  console.log('inbox reconnecting...');
 };
 
-outbox.onclose = function(){
-    console.log('outbox reconnecting...');
+outbox.onclose = function() {
+  console.log('outbox reconnecting...');
 };

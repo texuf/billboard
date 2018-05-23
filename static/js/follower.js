@@ -1,29 +1,28 @@
-
 //////////////////////////////////////////////////////////////////////////////
 //                build canvas 
 //////////////////////////////////////////////////////////////////////////////
 console.log('screen size', document.getElementById('qrcodeCanvasWrapper').offsetWidth, document.getElementById('qrcodeCanvasWrapper').offsetHeight)
 var qrcodeSize = Math.min(document.getElementById('qrcodeCanvasWrapper').offsetWidth, document.getElementById('qrcodeCanvasWrapper').offsetHeight) - 120
 var canvas = document.createElement('canvas');
-canvas.width  = qrcodeSize * 2;
+canvas.width = qrcodeSize * 2;
 canvas.height = qrcodeSize * 2;
-canvas.style.width  = (qrcodeSize) + 'px';
+canvas.style.width = (qrcodeSize) + 'px';
 canvas.style.height = (qrcodeSize) + 'px';
 
 var hiroImage = new Image;
 
 hiroImage.onload = function() {
-        console.log('hiro image loaded')
-        updateARCode()
+    console.log('hiro image loaded')
+    updateARCode()
 }
 
 
-function updateARCode(){
-        document.querySelector('#arcode-container').appendChild(canvas)
+function updateARCode() {
+    document.querySelector('#arcode-container').appendChild(canvas)
 
-        var context = canvas.getContext('2d')
-        
-        context.drawImage(hiroImage, 0, 0, canvas.width, canvas.height);
+    var context = canvas.getContext('2d')
+
+    context.drawImage(hiroImage, 0, 0, canvas.width, canvas.height);
 }
 
 
@@ -39,14 +38,14 @@ class Follower {
         this.inboxes = []
     }
 
-    initialize(followerID, baseURL){
+    initialize(followerID, baseURL) {
         console.log("subscribeTo", followerID, baseURL)
         this.baseURL = baseURL
         // Support TLS-specific URLs, when appropriate.
         if (window.location.protocol == "https:") {
-          var ws_scheme = "wss://";
+            var ws_scheme = "wss://";
         } else {
-          var ws_scheme = "ws://"
+            var ws_scheme = "ws://"
         };
 
         var inbox = new ReconnectingWebSocket(ws_scheme + location.host + "/receive/" + followerID);
@@ -54,11 +53,11 @@ class Follower {
         var self = this
 
         inbox.onmessage = function(message) {
-          var data = JSON.parse(message.data);
-          self.onMessage(data)
+            var data = JSON.parse(message.data);
+            self.onMessage(data)
         };
 
-        inbox.onclose = function(){
+        inbox.onclose = function() {
             console.log('inbox reconnecting...', followerID);
         };
 
