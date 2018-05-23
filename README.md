@@ -4,15 +4,14 @@ Check it out: https://protected-island-17148.herokuapp.com
 
 ### Architecture 
 
-* [follower] request `qr_code` from service
-  * `qr_code` is composed of `site_url/follower_id`
-  * `follower_id` can be obtained by `qr_code.split('/').last!`
+* [follower] initialized with `follower_id` and `qr_code` 
+  * `qr_code` is just `{site_url}/follower_id`
 * [follower] subscribe to any messages routed to `follower_id`
 * [follower] draw image representing `qr_code` on screen
-* [leader] recognize qr code in scene
+* [leader] recognize `qr_code` in scene, parse out `follower_id` by slicing on `{site_url}`
 * [leader] route message to `follower_id` requesting follower to display specific `marker_id`
 * [follower] display marker associated with `marker_id`
-* [leader] detect marker in scene
+* [leader] detect `marker_id` in scene
 * [leader] rinse wash repeat (continue to detect qr codes)
 * [leader] press button to capture all positions of markers
 * [leader] finally learn matrix multiplication (https://www.3dgep.com/understanding-the-view-matrix/)
@@ -41,6 +40,7 @@ Check it out: https://protected-island-17148.herokuapp.com
     * [X] type=image url="..."
     * [X] type=position x=[0-1] y=[0-1] width=[0-1] height=[0-1]
 * [ ] follower - after N seconds of no activity, switch ar code back to qr code
+* [ ] leader - add button to transition to image view
 * [ ] Give license a name
 * [ ] Run qr code reader and marker detector on the same scene?
 * [ ] investigate multi markers, pretty sure that's close to what i want to do - https://github.com/jeromeetienne/AR.js/tree/master/three.js/examples/multi-markers
