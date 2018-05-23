@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head>
+    <head>
         <title>Follower ${marker_id}$</title>
         <!-- thanks https://jeromeetienne.github.io/AR.js/three.js/examples/arcode.html -->
         <!--Import materialize.css-->
@@ -8,22 +8,19 @@
         
         <!--Let browser know website is optimized for mobile-->
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
-</head>
-
-<body>
-    <div id="qrcodeCanvasWrapper" style="position: absolute; top: 0; right: 0; bottom: 0; left: 0;">
-        <div id="arcode-container" class="valign center" style="width: 100%;" ></div>
-    </div>
-    <div id="chat-text">
-    </div>
-
-    <script type="text/javascript" src="${url_for('static', filename='js/jquery-2.0.3.min.js')}$"></script>
-    <script type="text/javascript" src="${url_for('static', filename='js/reconnecting-websocket.min.js')}$"></script>
-    <script type="text/javascript" src="${url_for('static', filename='js/chat.js')}$"></script>
-    <script type="text/javascript" src="${url_for('static', filename='js/follower.js')}$"></script>
-    <script>
+    </head>
+    <body>
+        <div id="qrcodeCanvasWrapper" style="position: absolute; top: 0; right: 0; bottom: 0; left: 0;">
+            <div id="arcode-container" class="valign center" style="width: 100%;" ></div>
+        </div>
+        <div id="chat-text">
+        </div>
+        <script type="text/javascript" src="${url_for('static', filename='js/jquery-2.0.3.min.js')}$"></script>
+        <script type="text/javascript" src="${url_for('static', filename='js/reconnecting-websocket.min.js')}$"></script>
+        <script type="text/javascript" src="${url_for('static', filename='js/chat.js')}$"></script>
+        <script type="text/javascript" src="${url_for('static', filename='js/follower.js')}$"></script>
+        <script>
         setHeroImage("${url_for('static', filename='images/3x3/%s.png' % marker_id)}$");
-    </script>
-</body>
+        </script>
+    </body>
 </html>
