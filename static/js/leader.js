@@ -2,6 +2,9 @@
 //      Init
 //////////////////////////////////////////////////////////////////////////////////
 
+// constants
+var canvasWidth = window.innerWidth
+var canvasHeight = window.innerHeight
 // init renderer
 var renderer = new THREE.WebGLRenderer({
     // antialias    : true,
@@ -9,7 +12,7 @@ var renderer = new THREE.WebGLRenderer({
 });
 renderer.setClearColor(new THREE.Color('lightgrey'), 0)
 // renderer.setPixelRatio( 1/2 );
-renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setSize(canvasWidth, canvasHeight);
 renderer.domElement.style.position = 'absolute'
 renderer.domElement.style.top = '0px'
 renderer.domElement.style.left = '0px'
@@ -20,6 +23,7 @@ var onRenderFuncs = [];
 
 // init scene and camera
 var scene = new THREE.Scene();
+
 
 //////////////////////////////////////////////////////////////////////////////////
 //      Initialize a basic camera
@@ -87,6 +91,48 @@ onRenderFuncs.push(function() {
 })
 
 
+
+////////////////////////////////////////////////////////////////////////////////
+//          MarkerHelper renders over marker
+////////////////////////////////////////////////////////////////////////////////
+class MarkerHelper {
+    constructor(text) {
+        this.object3d = new THREE.Group
+
+        var mesh = new THREE.AxisHelper()
+        this.object3d.add(mesh)
+
+        var canvas = document.createElement( 'canvas' );
+        canvas.width =  64;
+        canvas.height = 64;
+
+        var context = canvas.getContext( '2d' );
+        var texture = new THREE.CanvasTexture( canvas );
+
+        // put the text in the sprite
+        context.font = '48px monospace';
+        context.fillStyle = 'rgba(192,192,255, 0.9)';
+        context.fillRect( 0, 0, canvas.width, canvas.height );
+        context.fillStyle = 'darkblue';
+        context.fillText(text, canvas.width/4, 3*canvas.height/4 )
+        texture.needsUpdate = true
+        
+        // var geometry = new THREE.CubeGeometry(1, 1, 1)
+        var geometry = new THREE.PlaneGeometry(1, 1)
+        var material = new THREE.MeshBasicMaterial({
+            map: texture, 
+            color: "pink",
+            transparent: true,
+            opacity: 0.9,
+            wireframe: true
+        });
+        this.mesh = new THREE.Mesh(geometry, material)
+        this.mesh.rotation.x = -Math.PI/2
+
+        this.object3d.add(this.mesh)
+    }
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 //          Create a ArMarkerControls
 ////////////////////////////////////////////////////////////////////////////////
@@ -96,22 +142,39 @@ class MarkerDetector {
         this.followerId = followerId
         this.markerId = markerId
 
-        this.markerRoot = new THREE.Group()
-        scene.add(this.markerRoot)
-        this.artoolkitMarker = new THREEx.ArMarkerControls(arToolkitContext, this.markerRoot, {
+        this.object3d = new THREE.Group()
+        scene.add(this.object3d)
+        this.artoolkitMarker = new THREEx.ArMarkerControls(arToolkitContext, this.object3d, {
             type: 'barcode',
             barcodeValue: markerId
         })
+        
+        this.markerHelper = new MarkerHelper(markerId)
+        this.artoolkitMarker.object3d.add(this.markerHelper.object3d)
 
-        // build a smoothedControls
-        this.smoothedRoot = new THREE.Group()
-        scene.add(this.smoothedRoot)
-        this.smoothedControls = new THREEx.ArSmoothedControls(this.smoothedRoot, {
-            lerpPosition: 0.4,
-            lerpQuaternion: 0.3,
-            lerpScale: 1,
-        })
+        this.addDiv(markerId)
+        
+        //this.add3d(markerId)
+    }
 
+    addDiv(markerId) {
+        this.div = document.createElement('div')
+        this.div.style.width = "0px";
+        this.div.style.height = "0px";
+        this.div.style.background = "pink";
+        this.div.style.opacity = "0.5";
+        this.div.style.position = "absolute";
+        this.div.style.left = "0px";
+        this.div.style.top = "0px";
+        this.div.style.overflow = "hidden";
+        this.div.style.zIndex = "999"
+        this.div.style.textAlign = "center"
+        this.div.id = "marker-" + markerId
+        this.div.textContent = markerId
+        document.body.appendChild(this.div)
+    }
+
+    add3d(markerId) {
         var arWorldRoot = this.smoothedRoot
 
         // add a torus knot 
@@ -140,19 +203,50 @@ class MarkerDetector {
         this.mesh = new THREE.Mesh(geometry, material);
         this.mesh.position.y = 0.5
         arWorldRoot.add(this.mesh);
-
     }
 
     update() {
         // console.info("update marker detector", this.markerId)
-        this.smoothedControls.update(this.markerRoot)
-        this.mesh.rotation.x += 0.1
+        //this.mesh.rotation.x += 0.1
+        if (this.object3d.visible) {
+            var fullWidth = 300
+            var fullHeight = 200
+            var thisWidth = 20 // todo dynamic height
+            var thisHeight = 20
+            var rotationY = 0
+            this.div.style.width = thisWidth + 'px';
+            this.div.style.height = thisHeight + 'px';
+            this.div.style.left = "200px"; //(fullWidth/2 + this.object3d.position.x * fullWidth/2) +'px';
+            this.div.style.top = "100px"; //(fullHeight/2 - this.object3d.position.y * fullHeight/2 ) +'px';
+            this.div.style.transform = 'translate3d(-50%, -50%, 0) rotateZ('+this.object3d.rotation.y*-1+'rad)'
+            console.log(this.markerHelper.mesh)
+            //var vector = projector.projectVector( this.object3d.position.clone(), camera );
+            //vector.x *= canvas.width;
+            //vector.y *= canvas.height;
+            
+        }
     }
 }
 
-var detectors = []
+var detectors = [];
+// preload some markers for debugging
+detectors.push(new MarkerDetector(11, 1, scene));
+detectors.push(new MarkerDetector(10, 2, scene));
 
 onRenderFuncs.push(function(delta) {
+
+    // very silly algo
+    
+    // create really tall 'in'visible lines from top left, top right and bottom right (vector)
+    // take the first found marker, create a math plane
+    // get all intersections of lines with plane from last known mesh position https://jsfiddle.net/8uxw667m/77/
+    // map points to a 2d plane
+    // translate all points to positive upper left coord space (flip y, add 0-minx and 0-miny to all)
+    // subtract og z rotation OR rotate all but og back to normal
+    // normalize positions
+    // insert renderer in div to test (div rotates one way to follow phone, renderer rotates image back to match)
+    // sent opposite rotation and positions to phones
+
     detectors.forEach(function(detector) {
         detector.update()
     })
@@ -225,6 +319,34 @@ function parseQRCodes() {
     setInterval(function() {
         scanVideoNow(canvasEl, videoEl)
     }, 100);
+    /*
+    setInterval(function() {
+        
+        var visibleMarkerControls = detectors.filter(function(detector) {
+            return detector.object3d.visible === true
+        }).map(function(detector) {
+            // return JSON.stringify(detector.object3d.scale, null, ' ')
+            // return detector.object3d
+            // return screenSpaceFor(detector.object3d)
+            // return JSON.stringify(detector.object3d.rotation, null, ' ')
+            return detector.artoolkitMarker
+        });
+        console.log("foo", visibleMarkerControls)
+    }, 3000); */
+}
+
+function screenSpaceFor(object) {
+    let pos = new THREE.Vector3();
+    pos = pos.setFromMatrixPosition(object.matrixWorld);
+    pos.project(camera);
+
+    let widthHalf = canvasWidth / 2;
+    let heightHalf = canvasHeight / 2;
+    return pos
+    //pos.x = (pos.x * widthHalf) + widthHalf;
+    //pos.y = - (pos.y * heightHalf) + heightHalf;
+    //pos.z = 0;
+    //return pos
 }
 
 //////////////////////////////////////////////////////////////////////////////

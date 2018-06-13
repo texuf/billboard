@@ -40,9 +40,10 @@ Check it out: https://protected-island-17148.herokuapp.com
     * [X] type=image url="..."
     * [X] type=position x=[0-1] y=[0-1] width=[0-1] height=[0-1]
 * [X] Run qr code reader and marker detector on the same scene?
-
+* [X] use `var markerHelper = new THREEx.ArMarkerHelper(markerControls)` instead of torus
 * [ ] investigate multi markers, pretty sure that's close to what i want to do - https://github.com/jeromeetienne/AR.js/tree/master/three
-* [ ] use `var markerHelper = new THREEx.ArMarkerHelper(markerControls)` instead of torus
+* [ ] write system to draw divs on the screen in screen coords based on object3d information. Because I'm dealing with planes I think i can combine position and rotation, I should also be able to make a pure threejs file that does it
+
 * [ ] leader - add button to transition to image view
 * [ ] follower - after N seconds of no activity, switch ar code back to qr code
 * [ ] Give license a name
@@ -104,6 +105,7 @@ Check it out: https://protected-island-17148.herokuapp.com
 * https://github.com/mitmedialab/Junkyard-Jumbotron
 * Junkyard Jumbotron http://www.businessinsider.com/how-to-transform-multiple-screens-into-one-big-virtual-display-2011-3
 
+
 ### Documentation
 * https://redis.io/topics/pubsub
 * [redis pubsub demp](https://gist.github.com/pietern/348262)
@@ -115,6 +117,7 @@ Check it out: https://protected-island-17148.herokuapp.com
 ### Examples//Links
 * http://www.metablocks.com/2012/07/qr-code-art-examples-2/
 * https://www.google.com/search?q=qr+code+examples&safe=off&rlz=1C5CHFA_enUS722US729&tbm=isch&tbo=u&source=univ&sa=X&ved=0ahUKEwj4q-zY_tvYAhUK0oMKHVfGBOQQsAQIKA&biw=1536&bih=1276#imgdii=z9TPzfg7wpU7tM:&imgrc=qYFbC-k8OyYhkM:
+* intersection of 3d and plane in threejs https://jsfiddle.net/8uxw667m/77/
 
 
 ### Other approaches
