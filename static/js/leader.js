@@ -215,11 +215,11 @@ class MarkerDetector {
         if (this.object3d.visible) {
 
             // copy rotation over
-            var saveRotation = new THREE.Vector3()
-            saveRotation.copy(this.object3d.rotation)
-            this.object3d.rotation.x = Math.PI/2;//rotation.x
-            this.object3d.rotation.z = 0;//rotation.z
-            this.object3d.updateMatrix()
+            //var saveRotation = new THREE.Vector3()
+            //saveRotation.copy(this.object3d.rotation)
+            //this.object3d.rotation.x = Math.PI/2;//rotation.x
+            //this.object3d.rotation.z = 0;//rotation.z
+            //this.object3d.updateMatrix()
 
 
             var fullWidth = 300
@@ -306,8 +306,8 @@ class MarkerDetector {
             this.divc.style.left = Math.round(this.pointOfIntersectionC.x * fullWidth + fullWidth) + 'px';
             this.divc.style.top = Math.round(fullHeight - this.pointOfIntersectionC.y * fullHeight ) + 'px';
 
-            this.object3d.rotation.copy(saveRotation.copy)
-            this.object3d.updateMatrix()
+            //this.object3d.rotation.copy(saveRotation.copy)
+            //this.object3d.updateMatrix()
 
 
             // take the first found marker, create a math plane
