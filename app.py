@@ -25,7 +25,7 @@ app = Flask(__name__)
 app.debug = DEBUG
 
 # register test pages
-app.register_blueprint(app_tests, url_prefix='/tests')
+app.register_blueprint(app_tests, url_prefix='/test')
 
 # ssl yes!
 sslify = SSLify(app)
