@@ -2,7 +2,7 @@ import os
 
 ENV_PRODUCTION = 'production'
 ENV_FILENAME = '.env'
-ENV_LOCK_FILENAME = '.env-requirements'
+ENV_LOCK_FILENAME = 'support/.env-requirements'
 STUB = ''
 
 def _get_dict(filename):
