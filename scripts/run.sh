@@ -9,8 +9,13 @@ source venv/bin/activate
 python -c 'import scripts.env as env; env.check()'
 # start redis
 redis-server /usr/local/etc/redis.conf &
-# open err up (after the server starts)
-sleep 1 && python -mwebbrowser http://localhost:5000 &
+
+# open err up (auto launch after the server starts)
+# sleep 1 && python -mwebbrowser http://localhost:5000 & 
+
+# give the user some info
+echo "=================== Running on http://localhost:5000 ==================="
 # start app via heroku cli
 heroku local -f ProcfileDevelopment
+
 
