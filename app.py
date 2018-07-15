@@ -10,6 +10,7 @@ from flask_sslify import SSLify
 from time import strftime
 import json
 import shortuuid
+from app_tests import app_tests
 
 REDIS_URL = os.environ['REDIS_URL']
 DEBUG = 'DEBUG' in os.environ
@@ -22,6 +23,9 @@ redis = redis.from_url(REDIS_URL)
 # setup app
 app = Flask(__name__)
 app.debug = DEBUG
+
+# register test pages
+app.register_blueprint(app_tests, url_prefix='/tests')
 
 # ssl yes!
 sslify = SSLify(app)
@@ -120,16 +124,6 @@ def follower():
     follower_id = make_follower_id()
     return render_template('follower.html', qr_code=follower_id, follower_id=follower_id)
 
-
-# for testing markers
-@app.route('/followerMarker/<marker_id>')
-def followerMarker(marker_id):
-    return render_template('followerMarker.html', marker_id=marker_id)
-
-# standalone qr code reader
-@app.route('/reader')
-def reader():
-    return render_template('reader.html')
 
 @sockets.route('/submit')
 def inbox(ws):
