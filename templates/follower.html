@@ -5,9 +5,9 @@
         <!-- thanks https://github.com/jeromeetienne/jquery-qrcode/blob/master/examples/basic.html !!! -->
     </head>
     <body>
-        <script type="text/javascript" src="static/js/jquery-2.0.3.min.js"></script>
-        <script type="text/javascript" src="static/vendor/jeromeetinne/jquery-qrcode/jquery.qrcode.js"></script>
-        <script type="text/javascript" src="static/vendor/jeromeetinne/jquery-qrcode/qrcode.js"></script>
+        <script type="text/javascript" src="${url_for('static', filename='js/jquery-2.0.3.min.js')}$"></script>
+        <script type="text/javascript" src="${url_for('static', filename='vendor/jeromeetinne/jquery-qrcode/jquery.qrcode.js')}$"></script>
+        <script type="text/javascript" src="${url_for('static', filename='vendor/jeromeetinne/jquery-qrcode/qrcode.js')}$"></script>
         <div id="qrcodeCanvasWrapper" style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; padding: 60px">
             <div id="qrcodeCanvas" align="center"></div>
             <div id="arcode-container" align="center" ></div>
