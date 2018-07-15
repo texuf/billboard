@@ -8,12 +8,12 @@ app_tests = Blueprint('app_tests', __name__, template_folder='templates')
 # for testing markers
 @app_tests.route('/followerMarker/<marker_id>')
 def followerMarker(marker_id):
-    return render_template('tests/followerMarker.html', marker_id=marker_id)
+    return render_template('test/followerMarker.html', marker_id=marker_id)
 
 # standalone qr code reader
 @app_tests.route('/reader')
 def reader():
-    return render_template('tests/reader.html')
+    return render_template('test/reader.html')
 
 
 # standalone qr code reader
@@ -25,5 +25,5 @@ def follower_render_image():
 # test basic chat functionality
 @app_tests.route('/pubsub')
 def test_pubsub():
-    return render_template('tests/pubsub.html')
+    return render_template('test/pubsub.html')
 
