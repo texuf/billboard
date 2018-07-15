@@ -11,7 +11,7 @@ if ! [ -x "$(command -v brew)" ]; then
     exit
 fi
 # install redis dependency
-if ! [ -x "$(command -v redis)" ]; then
+if ! [ -x "$(command -v redis-server)" ]; then
     echo "installing redis"
     brew install redis
 fi
