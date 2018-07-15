@@ -40,6 +40,7 @@ class Follower {
 
     initialize(followerID, baseURL) {
         console.log("subscribeTo", followerID, baseURL)
+        console.assert(followerID && followerID.length > 0, "failed to provide followerID")
         this.baseURL = baseURL
         // Support TLS-specific URLs, when appropriate.
         if (window.location.protocol == "https:") {
