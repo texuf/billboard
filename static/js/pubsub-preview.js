@@ -1,7 +1,7 @@
 
 
-console.assert(typeof inbox != 'undefined', "please import pubsub.js before importing pubsub-preview.js")
-console.assert(document.getElementById('chat-text'), "please create div with id 'chat-text' before importing pubsub-preview.js")
+console.assert(typeof inbox != 'undefined', "please import pubsub.js before continuing")
+console.assert(document.getElementById('chat-text'), "please create div with id 'chat-text' continuing")
 
 inbox.onmessage = function(message) {
   var data = JSON.parse(message.data);

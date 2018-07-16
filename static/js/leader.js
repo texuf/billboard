@@ -2,6 +2,8 @@
 //      Init
 //////////////////////////////////////////////////////////////////////////////////
 
+console.assert(typeof outbox != 'undefined', "please import pubsub.js before continuing")
+
 // constants
 var canvasWidth = window.innerWidth
 var canvasHeight = window.innerHeight
@@ -482,59 +484,4 @@ function onQrCodeFound(qrCodeValue) {
     // update the client
     sendMarkerMessage(followerId, markerId);
 }
-
-
-function sendMarkerMessage(followerId, markerId) {
-    outbox.send(JSON.stringify({
-        channel: followerId,
-        type: "marker",
-        marker: markerId
-    }));
-}
-
-function sendImageMessage(followerId, image) {
-    outbox.send(JSON.stringify({
-        channel: followerId,
-        type: "image",
-        image: image
-    }));
-}
-
-function sendPositionMessage(followerId, x, y, width, height) {
-    outbox.send(JSON.stringify({
-        channel: followerId,
-        type: "position",
-        x: x,
-        y: y,
-        width: width,
-        height: height
-    }));
-}
-
-$("#input-form-marker").on("submit", function(event) {
-    event.preventDefault();
-    var follower = $("#input-follower")[0].value;
-    var marker = $("#input-marker")[0].value;
-    sendMarkerMessage(follower, marker);
-    // $("#input-marker")[0].value = "";
-});
-
-
-$("#input-form-image").on("submit", function(event) {
-    event.preventDefault();
-    var follower = $("#input-follower")[0].value;
-    var image = $("#input-image")[0].value;
-    sendImageMessage(follower, image);
-});
-
-
-$("#input-form-position").on("submit", function(event) {
-    event.preventDefault();
-    var follower = $("#input-follower")[0].value;
-    var x = $("#input-x")[0].value;
-    var y = $("#input-y")[0].value;
-    var width = $("#input-width")[0].value;
-    var height = $("#input-height")[0].value;
-    sendPositionMessage(follower, x, y, width, height);
-});
 

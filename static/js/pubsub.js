@@ -1,6 +1,6 @@
 
 
-console.assert(typeof ReconnectingWebSocket != 'undefined', "please import reconnecting-websocket.js before importing pubsub.js")
+console.assert(typeof ReconnectingWebSocket != 'undefined', "please import reconnecting-websocket.js continuing")
 
 // Support TLS-specific URLs, when appropriate.
 if (window.location.protocol == "https:") {
@@ -22,13 +22,42 @@ outbox.onclose = function() {
 };
 
 
-$("#input-form-chat").on("submit", function(event) {
-    event.preventDefault();
-    var handle = $("#input-handle")[0].value;
-    var text = $("#input-text")[0].value;
+
+function sendMessage(handle, text) {
+    if (outbox.readyState == 0) {
+      console.log("delaying pubsub because outboox isn't ready")
+      setTimeout(function() { sendMessage(handle, text); }, 100)
+    } else {
+      outbox.send(JSON.stringify({
+          handle: handle,
+          text: text
+      }));
+    }
+}
+
+function sendMarkerMessage(followerId, markerId) {
     outbox.send(JSON.stringify({
-        handle: handle,
-        text: text
+        channel: followerId,
+        type: "marker",
+        marker: markerId
     }));
-    $("#input-text")[0].value = "";
-});
+}
+
+function sendImageMessage(followerId, image) {
+    outbox.send(JSON.stringify({
+        channel: followerId,
+        type: "image",
+        image: image
+    }));
+}
+
+function sendPositionMessage(followerId, x, y, width, height) {
+    outbox.send(JSON.stringify({
+        channel: followerId,
+        type: "position",
+        x: x,
+        y: y,
+        width: width,
+        height: height
+    }));
+}
