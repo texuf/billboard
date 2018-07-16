@@ -2,7 +2,6 @@
 
 import os
 import logging
-import redis
 import gevent
 from flask import Flask, render_template, request
 from flask_sockets import Sockets
@@ -10,15 +9,12 @@ from flask_sslify import SSLify
 from time import strftime
 import json
 import shortuuid
+from app_pubsub import pubsub, GLOBAL_CHANNEL
 from app_tests import app_tests
 
-REDIS_URL = os.environ['REDIS_URL']
 DEBUG = 'DEBUG' in os.environ
-GLOBAL_CHANNEL = 'chat'
 
 
-# setup redis
-redis = redis.from_url(REDIS_URL)
 
 # setup app
 app = Flask(__name__)
@@ -55,62 +51,6 @@ if not DEBUG:
 app.logger.setLevel(logging.DEBUG)
 
 
-class PubSubBackend(object):
-    """Interface for registering and updating WebSocket clients."""
-
-    def __init__(self):
-        self.clients = {}
-        self.pubsub = redis.pubsub()
-        self.pubsub.subscribe(GLOBAL_CHANNEL) # if we don't add a subscription here, no additional subscription will fire aellis 5/19/2018
-
-    def __iter_data(self):
-        for message in self.pubsub.listen():
-            app.logger.info('message %s' % message)
-            data = message.get('data')
-            channel = message.get('channel')
-            if message['type'] == 'message':
-                app.logger.info('Sending message: {}'.format(data))
-                yield (channel, data)
-
-    def register(self, channel, client):
-        """Register a WebSocket connection for Redis updates."""
-        if channel not in self.clients:
-            app.logger.info('Subscribing to channel: {}'.format(channel))
-            self.pubsub.subscribe(channel)
-            self.clients[channel] = [client]
-        else:
-            self.clients[channel].append(client)
-
-    def send(self, client, channel, data):
-        """Send given data to the registered client.
-        Automatically discards invalid connections."""
-        try:
-            client.send(data)
-        except Exception:
-            self.clients[channel].remove(client)
-
-    def run(self):
-        """Listens for new messages in Redis, and sends them to clients."""
-        app.logger.info("run")
-        for (channel, data) in self.__iter_data():
-            data = data.decode("utf-8")
-            channel = channel.decode("utf-8")
-            clients = self.clients.get(channel, [])
-            app.logger.info('Sending message: {} on channel: {} to {} clients'.format(data, channel, len(clients)))
-            for client in clients:
-                gevent.spawn(self.send, client, channel, data)
-        app.logger.info("run-exit")
-
-    def start(self):
-        """Maintains Redis subscription in the background."""
-        gevent.spawn(self.run)
-
-
-
-pubsub = PubSubBackend()
-pubsub.start()
-
-
 @app.route('/')
 def hello():
     return render_template('index.html')
@@ -132,10 +72,10 @@ def inbox(ws):
         # Sleep to prevent *constant* context-switches.
         gevent.sleep(0.1)
         message = ws.receive()
-        channel = get_channel(message)
         if message:
+            channel = get_channel(message)
             app.logger.info('Inserting message: {} on channel {}'.format(message, channel))
-            redis.publish(channel, message)
+            pubsub.publish(channel, message)
 
 @sockets.route('/receive')
 def outbox(ws):
