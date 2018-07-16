@@ -55,7 +55,7 @@ if not DEBUG:
 app.logger.setLevel(logging.DEBUG)
 
 
-class ChatBackend(object):
+class PubSubBackend(object):
     """Interface for registering and updating WebSocket clients."""
 
     def __init__(self):
@@ -107,8 +107,8 @@ class ChatBackend(object):
 
 
 
-chats = ChatBackend()
-chats.start()
+pubsub = PubSubBackend()
+pubsub.start()
 
 
 @app.route('/')
@@ -139,25 +139,25 @@ def inbox(ws):
 
 @sockets.route('/receive')
 def outbox(ws):
-    """Sends outgoing chat messages, via `ChatBackend`."""
+    """Sends outgoing chat messages, via `PubSubBackend`."""
 
     channel = GLOBAL_CHANNEL
     app.logger.info('Receive on channel: {}'.format(channel))
-    chats.register(channel, ws)
+    pubsub.register(channel, ws)
 
     while not ws.closed:
-        # Context switch while `ChatBackend.start` is running in the background.
+        # Context switch while `PubSubBackend.start` is running in the background.
         gevent.sleep(0.1)
 
 @sockets.route('/receive/<channel>')
 def outbox(ws, channel):
-    """Sends outgoing chat messages, via `ChatBackend`."""
+    """Sends outgoing chat messages, via `PubSubBackend`."""
 
     app.logger.info('Receive on channel: {}'.format(channel))
-    chats.register(channel, ws)
+    pubsub.register(channel, ws)
 
     while not ws.closed:
-        # Context switch while `ChatBackend.start` is running in the background.
+        # Context switch while `PubSubBackend.start` is running in the background.
         gevent.sleep(0.1)
 
 
