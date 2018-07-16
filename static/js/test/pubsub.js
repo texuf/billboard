@@ -2,13 +2,31 @@
 // assert assumptions
 console.assert(typeof inbox != 'undefined', "please import pubsub.js before continuing")
 
-// send a hello world message
-sendMessage("pubsub-bot", "I'm awake!")
 
-// set an interval that puts some text on the screen every second
-setInterval(function() {
-    sendMessage("pubsub-bot", "The time is " + (new Date()).toLocaleTimeString() )
-}, 4000);
+function startPubSubTest() {
+    // send a hello world message
+    sendMessage("pubsub-bot", "I'm awake!")
+
+
+    // set an interval that puts some text on the screen every second
+    setInterval(function() {
+        sendMessage("pubsub-bot", "The time is " + (new Date()).toLocaleTimeString() )
+    }, 4000);
+
+    // test the follower functionality, create a follower
+    var follower = new PubSubClient(function(message) {
+        console.log("on direct message", message)
+          $("#chat-text").append("<div >" + $('<span/>').text("follower").html() + ": " + $('<span/>').text('got "' + message.type + '" message' ).html() + "</div>");
+    });
+
+    // create a unique id
+    var followerId = "f" + new Date().getTime() + Math.floor(Math.random() * 100)
+    follower.initialize(followerId)
+    sendMarkerMessage(followerId, 2)
+    sendImageMessage(followerId, "image")
+    sendPositionMessage(followerId, 4, 5, 60, 100)
+}
+
 
 
 // add form listeners

@@ -10,6 +10,7 @@ canvas.style.width = (qrcodeSize) + 'px';
 canvas.style.height = (qrcodeSize) + 'px';
 
 var hiroImage = new Image;
+var baseURL = ''
 
 hiroImage.onload = function() {
     console.log('hiro image loaded')
@@ -31,59 +32,28 @@ function setHeroImage(url) {
 }
 
 
-
-class Follower {
-
-    constructor() {
-        this.inboxes = []
+var follower = new PubSubClient(function(message) {
+    switch (message.type) {
+        case "marker":
+            console.log("got message to display marker", message.marker)
+            // remove qr code from dom
+            // add marker
+            jQuery('#qrcodeCanvas').empty(); // empty removes children, remove removes the whole thing
+            setHeroImage(baseURL + message.marker + ".png")
+            break
+        case "image":
+            console.log("got message to display image", message.image)
+            break
+        case "position":
+            console.log("got message to display position", message.x, message.y, message.width, message.height)
+            break
+        default:
+            console.error("got unknown message type", message)
     }
+})
 
-    initialize(followerID, baseURL) {
-        console.log("subscribeTo", followerID, baseURL)
-        console.assert(followerID && followerID.length > 0, "failed to provide followerID")
-        this.baseURL = baseURL
-        // Support TLS-specific URLs, when appropriate.
-        if (window.location.protocol == "https:") {
-            var ws_scheme = "wss://";
-        } else {
-            var ws_scheme = "ws://"
-        };
-
-        var inbox = new ReconnectingWebSocket(ws_scheme + location.host + "/receive/" + followerID);
-
-        var self = this
-
-        inbox.onmessage = function(message) {
-            var data = JSON.parse(message.data);
-            self.onMessage(data)
-        };
-
-        inbox.onclose = function() {
-            console.log('inbox reconnecting...', followerID);
-        };
-
-        this.inboxes.push(inbox)
-    }
-
-    onMessage(message) {
-        switch (message.type) {
-            case "marker":
-                console.log("got message to display marker", message.marker)
-                // remove qr code from dom
-                // add marker
-                jQuery('#qrcodeCanvas').empty(); // empty removes children, remove removes the whole thing
-                setHeroImage(this.baseURL + message.marker + ".png")
-                break
-            case "image":
-                console.log("got message to display image", message.image)
-                break
-            case "position":
-                console.log("got message to display position", message.x, message.y, message.width, message.height)
-                break
-            default:
-                console.error("got unknown message type", message)
-        }
-    }
+function startFollowing(followerId, baseURL) {
+    self.baseURL = baseURL
+    follower.initialize(followerId)
+    //follower.initialize("yrkZuJX", "${url_for('static', filename='images/3x3/')}$")
 }
-
-var follower = new Follower()
