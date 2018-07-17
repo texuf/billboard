@@ -3,11 +3,12 @@
 console.assert(typeof inbox != 'undefined', "please import pubsub.js before continuing")
 console.assert(document.getElementById('chat-text'), "please create div with id 'chat-text' continuing")
 
+function pubsubPreview(handle, text) {
+    $("#chat-text").prepend("<div >" + $('<span/>').text(handle).html() + ": " + $('<span/>').text(text).html() + "</div>");
+}
+
+// listen to chat messages
 inbox.onmessage = function(message) {
-  var data = JSON.parse(message.data);
-  console.log("onmessage", data)
-  $("#chat-text").append("<div >" + $('<span/>').text(data.handle).html() + ": " + $('<span/>').text(data.text).html() + "</div>");
-  $("#chat-text").stop().animate({
-    scrollTop: $('#chat-text')[0].scrollHeight
-  }, 800);
+    var data = JSON.parse(message.data);
+    pubsubPreview(data.handle, data.text)
 };

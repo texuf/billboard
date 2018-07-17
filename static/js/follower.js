@@ -20,6 +20,11 @@ var follower = new PubSubClient(function(message) {
         default:
             console.error("got unknown message type", message)
     }
+
+    // if we preview, print it to the screen
+    if (typeof pubsubPreview != 'undefined') {
+        pubsubPreview(message.type, JSON.stringify(message))
+    }
 })
 
 function startFollowing(followerId, baseURL) {
