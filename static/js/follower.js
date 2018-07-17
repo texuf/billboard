@@ -1,36 +1,6 @@
-//////////////////////////////////////////////////////////////////////////////
-//                build canvas 
-//////////////////////////////////////////////////////////////////////////////
-console.log('screen size', document.getElementById('qrcodeCanvasWrapper').offsetWidth, document.getElementById('qrcodeCanvasWrapper').offsetHeight)
-var qrcodeSize = Math.min(document.getElementById('qrcodeCanvasWrapper').offsetWidth, document.getElementById('qrcodeCanvasWrapper').offsetHeight) - 120
-var canvas = document.createElement('canvas');
-canvas.width = qrcodeSize * 2;
-canvas.height = qrcodeSize * 2;
-canvas.style.width = (qrcodeSize) + 'px';
-canvas.style.height = (qrcodeSize) + 'px';
 
-var hiroImage = new Image;
-var baseURL = ''
-
-hiroImage.onload = function() {
-    console.log('hiro image loaded')
-    updateARCode()
-}
-
-
-function updateARCode() {
-    document.querySelector('#arcode-container').appendChild(canvas)
-
-    var context = canvas.getContext('2d')
-
-    context.drawImage(hiroImage, 0, 0, canvas.width, canvas.height);
-}
-
-
-function setHeroImage(url) {
-    hiroImage.src = url
-}
-
+console.assert(typeof PubSubClient != 'undefined', 'import pubsub-client.js before continuing')
+console.assert(typeof setARMarkerImage != 'undefined', 'import follower-armarker.js before continuing')
 
 var follower = new PubSubClient(function(message) {
     switch (message.type) {
@@ -39,7 +9,7 @@ var follower = new PubSubClient(function(message) {
             // remove qr code from dom
             // add marker
             jQuery('#qrcodeCanvas').empty(); // empty removes children, remove removes the whole thing
-            setHeroImage(baseURL + message.marker + ".png")
+            setARMarkerImage(baseURL + message.marker + ".png")
             break
         case "image":
             console.log("got message to display image", message.image)

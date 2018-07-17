@@ -13,20 +13,20 @@ function startPubSubTest() {
         sendMessage("pubsub-bot", "The time is " + (new Date()).toLocaleTimeString() )
     }, 4000);
 
+
     // test the follower functionality, create a follower
-    var follower = new PubSubClient(function(message) {
+    var clientId = "f" + new Date().getTime() + Math.floor(Math.random() * 100)
+    var client = new PubSubClient(function(message) {
         console.log("on direct message", message)
-          $("#chat-text").append("<div >" + $('<span/>').text("follower").html() + ": " + $('<span/>').text('got "' + message.type + '" message' ).html() + "</div>");
+          $("#chat-text").append("<div >" + $('<span/>').text(clientId).html() + ": " + $('<span/>').text('got "' + message.type + '" message' ).html() + "</div>");
     });
 
     // create a unique id
-    var followerId = "f" + new Date().getTime() + Math.floor(Math.random() * 100)
-    follower.initialize(followerId)
-    sendMarkerMessage(followerId, 2)
-    sendImageMessage(followerId, "image")
-    sendPositionMessage(followerId, 4, 5, 60, 100)
+    client.initialize(clientId)
+    sendMarkerMessage(client.id, 2)
+    sendImageMessage(client.id, "image")
+    sendPositionMessage(client.id, 4, 5, 60, 100)
 }
-
 
 
 // add form listeners

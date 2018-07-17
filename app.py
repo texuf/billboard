@@ -3,7 +3,7 @@
 import os
 import logging
 import gevent
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, url_for, jsonify
 from flask_sockets import Sockets
 from flask_sslify import SSLify
 from time import strftime
@@ -64,6 +64,20 @@ def follower():
     follower_id = make_follower_id()
     return render_template('follower.html', qr_code=follower_id, follower_id=follower_id)
 
+# all tests
+@app.route('/tests')
+@app.route('/test')
+def list_routes():
+    import urllib
+    output = []
+    for rule in app.url_map.iter_rules():
+        options = {arg: "[{0}]".format(arg) for arg in rule.arguments}
+        url = urllib.parse.unquote( url_for(rule.endpoint, **options) )
+        if '/test/' in url:
+            output.append(url)
+    
+    return render_template('test/tests.html', tests=sorted(output))
+
 
 @sockets.route('/submit')
 def inbox(ws):
@@ -99,6 +113,7 @@ def outbox(ws, channel):
     while not ws.closed:
         # Context switch while `PubSubBackend.start` is running in the background.
         gevent.sleep(0.1)
+
 
 
 

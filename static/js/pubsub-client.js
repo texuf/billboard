@@ -2,28 +2,29 @@
 class PubSubClient {
     constructor(onMessage) {
         console.assert(onMessage, "onMessage callback should not be null")
-        this.inboxes = []
+        this.inbox = null
         this.onMessage = onMessage
+        this.id = null
     }
 
-    initialize(followerId) {
-        console.log("subscribing to", followerId)
-        console.assert(followerId && followerId.length > 0, "failed to provide followerId")
-        console.assert(this.inboxes.length == 0, "PubSubClient has already been initialized")
+    initialize(clientId) {
+        console.log("subscribing to", clientId)
+        console.assert(clientId && clientId.length > 0, "failed to provide clientId")
+        console.assert(this.inbox == null, "PubSubClient has already been initialized")
         console.assert(typeof ws_scheme != 'undefined', 'please import pubsub.js before continuing')
-        var inbox = new ReconnectingWebSocket(ws_scheme + location.host + "/receive/" + followerId);
+        this.id = clientId
+        this.inbox = new ReconnectingWebSocket(ws_scheme + location.host + "/receive/" + clientId);
 
         var self = this
 
-        inbox.onmessage = function(message) {
+        this.inbox.onmessage = function(message) {
             var data = JSON.parse(message.data);
             self.onMessage(data)
         };
 
-        inbox.onclose = function() {
-            console.log('inbox reconnecting...', followerId);
+        this.inbox.onclose = function() {
+            console.log('inbox reconnecting...', clientId);
         };
 
-        this.inboxes.push(inbox)
     }
 }
