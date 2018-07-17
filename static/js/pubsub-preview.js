@@ -3,6 +3,7 @@
 console.assert(typeof inbox != 'undefined', "please import pubsub.js before continuing")
 console.assert(document.getElementById('chat-text'), "please create div with id 'chat-text' continuing")
 
+// prepend chat messages to chat-text div
 function pubsubPreview(handle, text) {
     $("#chat-text").prepend("<div >" + $('<span/>').text(handle).html() + ": " + $('<span/>').text(text).html() + "</div>");
 }
