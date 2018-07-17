@@ -19,6 +19,9 @@ var follower = new PubSubClient(function(message) {
         case "position":
             console.log("got message to display position", message.x, message.y, message.width, message.height)
             break
+        case "ping":
+            console.log("got ping", message.timeout)
+            break
         default:
             console.error("got unknown message type", message)
     }
