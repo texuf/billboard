@@ -23,7 +23,7 @@ var follower = new PubSubClient(function(message) {
 })
 
 function startFollowing(followerId, baseURL) {
-    self.baseURL = baseURL
+    setARMarkerBaseURL(baseURL)
     follower.initialize(followerId)
     //follower.initialize("yrkZuJX", "${url_for('static', filename='images/3x3/')}$")
 }

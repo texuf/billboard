@@ -28,6 +28,9 @@ function updateARCode() {
     context.drawImage(arMarkerImage, 0, 0, canvas.width, canvas.height);
 }
 
+function setARMarkerBaseURL(url) {
+    baseURL = url
+}
 
 function setARMarkerImage(url) {
     arMarkerImage.src = url
