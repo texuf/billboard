@@ -12,13 +12,11 @@ canvas.style.width = (qrcodeSize) + 'px';
 canvas.style.height = (qrcodeSize) + 'px';
 
 var arMarkerImage = new Image;
-var baseURL = ''
 
 arMarkerImage.onload = function() {
     console.log('ar marker image loaded')
     updateARCode()
 }
-
 
 function updateARCode() {
     document.querySelector('#arcode-container').appendChild(canvas)
@@ -26,10 +24,6 @@ function updateARCode() {
     var context = canvas.getContext('2d')
 
     context.drawImage(arMarkerImage, 0, 0, canvas.width, canvas.height);
-}
-
-function setARMarkerBaseURL(url) {
-    baseURL = url
 }
 
 function setARMarkerImage(url) {

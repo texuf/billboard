@@ -2,6 +2,8 @@
 console.assert(typeof PubSubClient != 'undefined', 'import pubsub-client.js before continuing')
 console.assert(typeof setARMarkerImage != 'undefined', 'import follower-armarker.js before continuing')
 
+var baseURL = ''
+
 var follower = new PubSubClient(function(message) {
     switch (message.type) {
         case "marker":
@@ -28,6 +30,6 @@ var follower = new PubSubClient(function(message) {
 })
 
 function startFollowing(followerId, baseURL) {
-    setARMarkerBaseURL(baseURL)
+    self.baseURL = baseURL
     follower.initialize(followerId)
 }
