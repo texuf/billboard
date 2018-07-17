@@ -23,17 +23,6 @@ outbox.onclose = function() {
 
 
 
-function sendMessage(handle, text) {
-    if (outbox.readyState == 0) {
-        console.log("delaying pubsub because outboox isn't ready")
-        setTimeout(function() { sendMessage(handle, text); }, 100)
-    } else {
-        outbox.send(JSON.stringify({
-            handle: handle,
-            text: text
-        }));
-    }
-}
 
 function sendMarkerMessage(followerId, markerId) {
     if (outbox.readyState == 0) {
@@ -48,8 +37,24 @@ function sendMarkerMessage(followerId, markerId) {
     }
 }
 
+function sendPing(followerId, timeout) {
+    if (!timeout) {
+        timeout = 10
+    }
+    if (outbox.readyState == 0) {
+        console.log("delaying pubsub because outboox isn't ready")
+        setTimeout(function() { ping(followerId, timeout); }, 100)
+    } else {
+      outbox.send(JSON.stringify({
+          channel: followerId,
+          type: "ping",
+          timeout: timeout
+      }));
+    }
+}
+
 function sendImageMessage(followerId, image) {
-  if (outbox.readyState == 0) {
+    if (outbox.readyState == 0) {
         console.log("delaying pubsub because outboox isn't ready")
         setTimeout(function() { sendImageMessage(followerId, image); }, 100)
     } else {
@@ -74,5 +79,17 @@ function sendPositionMessage(followerId, x, y, width, height) {
           width: width,
           height: height
       }));
+    }
+}
+
+function sendChatMessage(handle, text) {
+    if (outbox.readyState == 0) {
+        console.log("delaying pubsub because outboox isn't ready")
+        setTimeout(function() { sendChatMessage(handle, text); }, 100)
+    } else {
+        outbox.send(JSON.stringify({
+            handle: handle,
+            text: text
+        }));
     }
 }

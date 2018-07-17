@@ -86,10 +86,14 @@ def inbox(ws):
         # Sleep to prevent *constant* context-switches.
         gevent.sleep(0.1)
         message = ws.receive()
+        channel = get_channel(message)
         if message:
-            channel = get_channel(message)
-            app.logger.info('Inserting message: {} on channel {}'.format(message, channel))
-            pubsub.publish(channel, message)
+            if len(channel) > 0:
+                app.logger.info('Inserting message: {} on channel {}'.format(message, channel))
+                pubsub.publish(channel, message)
+            else:
+                app.logger.error('Failed to insert message: {} Channel was empty!'.format(message))
+
 
 @sockets.route('/receive')
 def outbox(ws):

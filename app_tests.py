@@ -13,7 +13,7 @@ def reader():
 # for testing follower
 @app_tests.route('/follower/<follower_id>')
 def follower_render_image(follower_id):
-    if follower_id == '[follower_id]': follower_id = 'some-test-id'
+    if follower_id == '[follower_id]': follower_id = 'test-id'
     return render_template('follower.html', qr_code=follower_id, follower_id=follower_id)
 
 
