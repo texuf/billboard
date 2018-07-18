@@ -1,25 +1,43 @@
 
 
 
+var followerImageContainer = document.getElementById('image-container')
+console.assert(followerImageContainer, "please create div with id 'image-container' continuing")
+console.assert(typeof qrcodeSize != 'undefined', "please include follower-armarker.js before continuing")
+
 var canvasWidth = window.innerWidth
 var canvasHeight = window.innerHeight
 
-var followerImageContainer = document.getElementById('image-container')
-console.assert(followerImageContainer, "please create div with id 'image-container' continuing")
+var imageWidth = 1
+var imageHeight = 1
 
-console.log("fooooooo!!!!!")
+function hideImage() {
+    console.log("emptying", followerImageContainer.id)
+    jQuery('#' + followerImageContainer.id).empty();
+}
 
-function showImage(imageURL, imageWidth, imageHeight, positionTop, positionLeft, scale) {
-    console.log(imageURL, imageWidth, imageHeight, positionTop, positionLeft, scale)
-    jQuery(followerImageContainer.id).empty();
+function showImage(imageURL, imageWidth, imageHeight) {
+    console.log("image", imageURL, imageWidth, imageHeight)
+    hideImage()
 
+    self.imageWidth = imageWidth
+    self.imageHeight = imageHeight
     // <img id="lightboxImage" alt="" src="" style="display: inline; width: 3657px; height: 1091px; z-index: 10500;">
     var image = document.createElement('img')
     image.id = 'image-container-img'
     image.src = imageURL
     image.style.zIndex = 10500
 
-    var pct = Math.min(canvasWidth / imageWidth,  canvasHeight / imageHeight ) * scale
+    followerImageContainer.appendChild(image)
+    positionImage(0, 0, 1)
+}
+
+function positionImage(positionTop, positionLeft, scale) {
+    console.log("position", positionTop, positionLeft, scale)
+    var image = document.getElementById('image-container-img')
+    var pct = Math.min(qrcodeSize / imageWidth,  qrcodeSize / imageHeight ) * scale
+    var startX = canvasWidth / 2 - qrcodeSize / 2
+    var startY = canvasHeight / 2 - qrcodeSize / 2
     console.log("pct", pct)
 
     var scaledWidth = imageWidth * pct
@@ -28,9 +46,8 @@ function showImage(imageURL, imageWidth, imageHeight, positionTop, positionLeft,
     image.style.width = scaledWidth + 'px'
     image.style.height = scaledHeight + 'px'
 
-    followerImageContainer.style.left = 0 - scaledWidth * positionLeft + 'px'
-    followerImageContainer.style.top = 0 - scaledHeight * positionTop + 'px'
-
-    followerImageContainer.appendChild(image)
+    followerImageContainer.style.position = 'absolute'
+    followerImageContainer.style.left = startX - scaledWidth * positionLeft + 'px'
+    followerImageContainer.style.top = startY - scaledHeight * positionTop + 'px'
 
 }

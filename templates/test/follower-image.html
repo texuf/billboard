@@ -3,8 +3,6 @@
     load an image... 
     translate image arbitrary amount
     scale image
-    detect unreasonable inputs
-    timeout if not pinged
 -->
 <!DOCTYPE html>
 <html>
@@ -12,12 +10,17 @@
     <title>Test Image</title>
 </head>
 <body>
+    <div id="qrcodeCanvasWrapper" style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; padding: 30px">
+        <div id="arcode-container" class="valign center" style="width: 100%;" ></div>
+    </div>
     <div id="image-container" style="position: absolute; top: 0; right: 0; bottom: 0; left: 0;" ></div>
     
     <script type="text/javascript" src="${url_for('static', filename='vendor/jquery-2.0.3.min.js')}$"></script>
-    <script type="text/javascript"  src="${url_for('static', filename='js/follower-image.js')}$"></script>
+    <script type="text/javascript" src="${url_for('static', filename='js/follower-armarker.js')}$"></script>
+    <script type="text/javascript" src="${url_for('static', filename='js/follower-image.js')}$"></script>
     <script type="text/javascript">
-        showImage("${image_url}$", 3657, 1091, 0.0, 0.0, 5)
+        showImage("${image_url}$", 3657, 1091)
+        positionImage(0.4, 0.4, 10)
     </script>
 </body>
 </html>

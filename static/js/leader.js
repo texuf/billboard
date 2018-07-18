@@ -305,6 +305,7 @@ class MarkerDetector {
 
             this.divb.style.left = Math.round(this.pointOfIntersectionB.x * fullWidth + fullWidth) + 'px';
             this.divb.style.top = Math.round(fullHeight - this.pointOfIntersectionB.y * fullHeight ) + 'px';
+            
             this.divc.style.left = Math.round(this.pointOfIntersectionC.x * fullWidth + fullWidth) + 'px';
             this.divc.style.top = Math.round(fullHeight - this.pointOfIntersectionC.y * fullHeight ) + 'px';
 

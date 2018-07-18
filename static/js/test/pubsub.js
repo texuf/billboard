@@ -24,8 +24,8 @@ function startPubSubTest() {
     // create a unique id
     client.initialize(clientId)
     sendMarkerMessage(client.id, 2)
-    sendImageMessage(client.id, "image")
-    sendPositionMessage(client.id, 4, 5, 60, 100)
+    sendImageMessage(client.id, "image", 10, 10)
+    sendPositionMessage(client.id, 4, 5, 10)
 }
 
 
@@ -47,8 +47,10 @@ $("#input-form-ping").on("submit", function(event) {
 $("#input-form-image").on("submit", function(event) {
     event.preventDefault();
     var follower = $("#input-image-follower")[0].value;
-    var image = $("#input-image")[0].value;
-    sendImageMessage(follower, image);
+    var imageURL = $("#input-image-url")[0].value;
+    var imageWidth = $("#input-image-width")[0].value;
+    var imageHeight = $("#input-image-height")[0].value;
+    sendImageMessage(follower, imageURL, imageWidth, imageHeight);
 });
 
 
@@ -57,9 +59,8 @@ $("#input-form-position").on("submit", function(event) {
     var follower = $("#input-position-follower")[0].value;
     var x = $("#input-position-x")[0].value;
     var y = $("#input-position-y")[0].value;
-    var width = $("#input-position-width")[0].value;
-    var height = $("#input-position-height")[0].value;
-    sendPositionMessage(follower, x, y, width, height);
+    var scale = $("#input-position-scale")[0].value;
+    sendPositionMessage(follower, x, y, scale);
 });
 
 

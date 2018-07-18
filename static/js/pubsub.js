@@ -53,31 +53,32 @@ function sendPing(followerId, timeout) {
     }
 }
 
-function sendImageMessage(followerId, image) {
+function sendImageMessage(followerId, imageURL, imageWidth, imageHeight) {
     if (outbox.readyState == 0) {
         console.log("delaying pubsub because outboox isn't ready")
-        setTimeout(function() { sendImageMessage(followerId, image); }, 100)
+        setTimeout(function() { sendImageMessage(followerId, imageURL, imageWidth, imageHeight); }, 100)
     } else {
       outbox.send(JSON.stringify({
           channel: followerId,
           type: "image",
-          image: image
+          imageURL: imageURL,
+          imageWidth: imageWidth,
+          imageHeight: imageHeight
       }));
     }
 }
 
-function sendPositionMessage(followerId, x, y, width, height) {
+function sendPositionMessage(followerId, x, y, scale) {
   if (outbox.readyState == 0) {
         console.log("delaying pubsub because outboox isn't ready")
-        setTimeout(function() { sendPositionMessage(followerId, x, y, width, height); }, 100)
+        setTimeout(function() { sendPositionMessage(followerId, x, y, scale); }, 100)
     } else {
       outbox.send(JSON.stringify({
           channel: followerId,
           type: "position",
           x: x,
           y: y,
-          width: width,
-          height: height
+          scale: scale
       }));
     }
 }
