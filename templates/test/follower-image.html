@@ -1,0 +1,23 @@
+
+<!-- 
+    load an image... 
+    translate image arbitrary amount
+    scale image
+    detect unreasonable inputs
+    timeout if not pinged
+-->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Image</title>
+</head>
+<body>
+    <div id="image-container" style="position: absolute; top: 0; right: 0; bottom: 0; left: 0;" ></div>
+    
+    <script type="text/javascript" src="${url_for('static', filename='vendor/jquery-2.0.3.min.js')}$"></script>
+    <script type="text/javascript"  src="${url_for('static', filename='js/follower-image.js')}$"></script>
+    <script type="text/javascript">
+        showImage("${image_url}$", 3657, 1091, 0.0, 0.0, 5)
+    </script>
+</body>
+</html>
