@@ -44,7 +44,12 @@ Check it out: https://protected-island-17148.herokuapp.com
 * [X] investigate multi markers, pretty sure that's close to what i want to do - https://github.com/jeromeetienne/AR.js/tree/master/three
 * [X] write system to draw divs on the screen in screen coords based on object3d information. Because I'm dealing with planes I think i can combine position and rotation, I should also be able to make a pure threejs file that does it
 
-* [ ] leader - add button to transition to image view
+* [x] leader - add button to transition to image view
+* [ ] leader - wire up button to
+  * [ ] gather data on visible markers
+  * [ ] transition to view rendering the image
+  * [ ] send setImage and positionImage messages to each client
+  * [ ] allow dragging and zooming on an said image
 * [ ] follower - after N seconds of no activity, switch ar code back to qr code
 * [ ] Give license a name
 .js/examples/multi-markers
