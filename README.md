@@ -134,3 +134,51 @@ Check it out: https://protected-island-17148.herokuapp.com
 * https://github.com/schmich/instascan
 * https://github.com/edi9999/jsqrcode
 * https://github.com/LazarSoft/jsqrcode
+
+
+### Links
+* https://github.com/mitmedialab/Junkyard-Jumbotron
+* https://github.com/mitmedialab/Junkyard-Jumbotron/blob/master/python/calibrate.py
+* https://github.com/mitmedialab/Junkyard-Jumbotron/blob/7e32ecc8a01ea5a578fea6ea54f1f44c7f8f546e/python/ARToolKitPlus_2.1.1/src/core/arGetTransMat.cxx
+* https://jeromeetienne.github.io/AR.js/
+* https://jeromeetienne.github.io/AR.js/three.js/examples/arcode.html
+* https://github.com/jeromeetienne/AR.js/tree/master/aframe
+* https://github.com/jeromeetienne/AR.js/tree/master/three.js/vendor
+* https://github.com/jeromeetienne/AR.js/blob/2783df606361006f0cac725de5b6708b7a2070a8/three.js/examples/multi-markers/examples/learner.html
+* https://github.com/jeromeetienne/AR.js/blob/master/three.js/examples/multi-markers/examples/player.html
+* https://github.com/jeromeetienne/AR.js/blob/5394ec015b987754552fce891820f41f1b982fac/three.js/examples/multi-markers/threex-armultimarkerutils.js
+* 
+* https://github.com/artoolkit/artoolkit5/tree/master/doc/patterns
+* https://github.com/jeromeetienne/jquery-qrcode
+* http://jeromeetienne.github.io/jquery-qrcode/examples/basic.html
+* https://marmelab.com/blog/2017/06/19/augmented-reality-html5.html
+* https://github.com/marmelab/sketch-by-phone
+* https://sketch-by-phone.now.sh/
+* http://blog.jetienne.com/blog/2011/04/07/jquery-qrcode/
+
+* https://jsfiddle.net/prisoner849/8uxw667m/
+* https://jsfiddle.net/8uxw667m/84/
+
+* https://webqr.com/create.html
+* https://github.com/LazarSoft/jsqrcode
+
+* https://en.wikipedia.org/wiki/Vector_projection
+* https://www.3dgep.com/understanding-the-view-matrix/
+* https://en.wikipedia.org/wiki/3D_projection
+* https://threejs.org/examples/#canvas_geometry_cube
+* http://barkofthebyte.azurewebsites.net/post/2014/05/05/three-js-projecting-mouse-clicks-to-a-3d-scene-how-to-do-it-and-how-it-works
+* http://zachberry.com/blog/tracking-3d-objects-in-2d-with-three-js/
+
+* http://bruceeckel.github.io/2015/03/10/websockets-in-flask-on-heroku/
+* https://news.ycombinator.com/item?id=6628109
+* https://devcenter.heroku.com/articles/go-websockets#front-end
+* https://devcenter.heroku.com/articles/python-websockets
+* https://devcenter.heroku.com/articles/websockets
+
+* https://flask-socketio.readthedocs.io/en/latest/#gunicorn-web-server
+* https://coderwall.com/p/q2mrbw/gevent-with-debug-support-for-flask
+
+* https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Streams.html
+* https://forums.aws.amazon.com/message.jspa?messageID=504595
+
+* https://learnxinyminutes.com/docs/lua/
