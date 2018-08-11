@@ -35,9 +35,9 @@ function showImage(imageURL, imageWidth, imageHeight) {
 function positionImage(positionTop, positionLeft, scale) {
     console.log("position", positionTop, positionLeft, scale)
     var image = document.getElementById('image-container-img')
-    var pct = Math.min(qrcodeSize / imageWidth,  qrcodeSize / imageHeight ) * scale
-    var startX = canvasWidth / 2 - qrcodeSize / 2
-    var startY = canvasHeight / 2 - qrcodeSize / 2
+    var pct = scale // Math.min(qrcodeSize / imageWidth,  qrcodeSize / imageHeight ) * scale
+    var startX = 0 // canvasWidth / 2 - qrcodeSize / 2
+    var startY = 0 // canvasHeight / 2 - qrcodeSize / 2
     console.log("pct", pct)
 
     var scaledWidth = imageWidth * pct
@@ -47,7 +47,7 @@ function positionImage(positionTop, positionLeft, scale) {
     image.style.height = scaledHeight + 'px'
 
     followerImageContainer.style.position = 'absolute'
-    followerImageContainer.style.left = startX - scaledWidth * positionLeft + 'px'
-    followerImageContainer.style.top = startY - scaledHeight * positionTop + 'px'
+    followerImageContainer.style.top = positionTop + 'px' // startY - scaledHeight * positionTop + 'px'
+    followerImageContainer.style.left = positionLeft + 'px' //startX - scaledWidth * positionLeft + 'px'
 
 }
