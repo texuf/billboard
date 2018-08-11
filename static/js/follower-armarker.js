@@ -18,8 +18,15 @@ arMarkerImage.onload = function() {
     updateARCode()
 }
 
+function hideARCode() {
+    document.querySelector('#arcode-container').style.display = "none"
+}
+
 function updateARCode() {
-    document.querySelector('#arcode-container').appendChild(canvas)
+    // document.querySelector('#arcode-container').appendChild(canvas)
+    var arcontainer = document.querySelector('#arcode-container')
+    arcontainer.style.display = "block"
+    arcontainer.appendChild(canvas)
 
     var context = canvas.getContext('2d')
 

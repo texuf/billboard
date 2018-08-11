@@ -18,15 +18,19 @@
                 <button class="btn btn-primary" type="submit">SNAPSHOT</button>
             </form>
         </div>
-        <div class="container" style="z-index: 2; position: relative" >
+        <div id="chat-container" class="container" style="z-index: 2; position: relative" >
             <div id="chat-text">
             </div>
         </div>
+        <dif id="draggable" style="position: absolute; z-index: 99; display: none">
+            <img id="draggable-image" src="${url_for('static', filename='images/PanamericanUnity.jpg')}$">
+        </dif>
         <script src="${url_for('static', filename='vendor/jsqrcode-packaged/build/jsqrcode.js')}$"></script>
         <script type="text/javascript" src="${url_for('static', filename='vendor/jquery-2.0.3.min.js')}$"></script>
         <script type="text/javascript" src="${url_for('static', filename='vendor/reconnecting-websocket.min.js')}$"></script>
         <script type="text/javascript" src="${url_for('static', filename='js/pubsub.js')}$"></script>
         <script type="text/javascript" src="${url_for('static', filename='js/pubsub-preview.js')}$"></script>
+        <script type="text/javascript" src="${url_for('static', filename='js/draggable.js')}$"></script>
         <script type="text/javascript" src="${url_for('static', filename='js/leader.js')}$"></script>
     </body>
 </html>

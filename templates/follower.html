@@ -17,10 +17,12 @@
         </div>
         <script>
         // display our qr code!
+        var size = Math.min(document.getElementById('qrcodeCanvasWrapper').offsetHeight - 120, document.getElementById('qrcodeCanvasWrapper').offsetWidth) - 120
+        size = Math.max(size, 120)
         jQuery('#qrcodeCanvas').qrcode({
             text: "${qr_code}$",
-            width: Math.min(document.getElementById('qrcodeCanvasWrapper').offsetHeight - 120, document.getElementById('qrcodeCanvasWrapper').offsetWidth) - 120,
-            height: Math.min(document.getElementById('qrcodeCanvasWrapper').offsetHeight - 120, document.getElementById('qrcodeCanvasWrapper').offsetWidth) - 120
+            width: size,
+            height: size
         }); 
         </script>
         <script type="text/javascript" src="${url_for('static', filename='vendor/reconnecting-websocket.min.js')}$"></script>

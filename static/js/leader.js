@@ -3,6 +3,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 console.assert(typeof outbox != 'undefined', "please import pubsub.js before continuing")
+console.assert(typeof dragElement != 'undefined', "please import draggable.js before continuing")
 
 // constants
 var canvasWidth = window.innerWidth
@@ -486,9 +487,53 @@ function onQrCodeFound(qrCodeValue) {
     sendMarkerMessage(followerId, markerId);
 }
 
+function toggle(x) {
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+}
 
+function onDrag(top, left) {
+    //console.log("ondrag", top, left)
+}
+
+function switchViews() {
+    // switch back and forth between video and mural views
+    var image = document.getElementById("draggable-image");
+    toggle(draggable);
+    toggle(document.getElementById("chat-container"));
+    toggle(document.getElementsByTagName("video")[0]);
+    
+    if (draggable.style.display == "none") {
+        detectors.forEach(function(detector) {
+            console.log("show detector", detector.followerId, detector.markerId)
+            sendMarkerMessage(detector.followerId, detector.markerId)
+        });
+    } else {
+        var imageURL = '/static/images/PanamericanUnity.jpg';
+        var imageWidth = image.width;
+        var imageHeight = image.height;
+        foundMarkers.forEach(function(follower) {
+            console.log("sending to marker", follower, imageURL, imageWidth, imageHeight)
+            sendImageMessage(follower, imageURL, imageWidth, imageHeight);
+        });
+    }
+    
+}
 
 $("#input-form-take-snapshot").on("submit", function(event) {
     event.preventDefault();
-    console.log("Oh YEahh!!!")
+    console.log("Oh YEahh!!!", foundMarkers);
+    switchViews()
 });
+
+
+
+var draggable = document.getElementById("draggable");
+dragElement(draggable, onDrag);
+
+// debug
+// onQrCodeFound("BYc8Dco")
+// onQrCodeFound("jHgU68m")

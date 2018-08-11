@@ -12,7 +12,9 @@ function hideQRCode() {
 var follower = new PubSubClient(function(message) {
     switch (message.type) {
         case "marker":
-            console.log("got message to display marker", message.marker)
+            console.log("got message to display marker ;)", message.marker)
+            // remove image from dom
+            hideImage()
             // remove qr code from dom
             hideQRCode()
             // add marker
@@ -21,6 +23,7 @@ var follower = new PubSubClient(function(message) {
         case "image":
             console.log("got message to display image", message.imageURL, message.imageWidth, message.imageHeight)
             hideQRCode()
+            hideARCode()
             showImage(message.imageURL, message.imageWidth, message.imageHeight)
             break
         case "position":
