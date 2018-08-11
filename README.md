@@ -46,6 +46,8 @@ Check it out: https://protected-island-17148.herokuapp.com
 
 * [x] leader - add button to transition to image view
 * [ ] leader - wire up button to
+  * [ ] V1 same image on every screen
+  * [ ] V2 send proper position info
   * [ ] gather data on visible markers
   * [ ] transition to view rendering the image
   * [ ] send setImage and positionImage messages to each client
