@@ -1,5 +1,6 @@
 
 
+console.assert(typeof TweenLite != 'undefined', 'import TweenLite before continuing https://greensock.com/tweenlite')
 
 var followerImageContainer = document.getElementById('image-container')
 console.assert(followerImageContainer, "please create div with id 'image-container' continuing")
@@ -43,11 +44,9 @@ function positionImage(positionTop, positionLeft, scale) {
     var scaledWidth = imageWidth * pct
     var scaledHeight = imageHeight * pct
 
-    image.style.width = scaledWidth + 'px'
-    image.style.height = scaledHeight + 'px'
+    TweenLite.to(image, 0.3, {width: scaledWidth + 'px', height: scaledHeight + 'px'});
 
     followerImageContainer.style.position = 'absolute'
-    followerImageContainer.style.top = positionTop + 'px' // startY - scaledHeight * positionTop + 'px'
-    followerImageContainer.style.left = positionLeft + 'px' //startX - scaledWidth * positionLeft + 'px'
+    TweenLite.to(followerImageContainer, 0.3, {top: positionTop + 'px', left: positionLeft + 'px'});
 
 }
