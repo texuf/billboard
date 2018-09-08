@@ -226,9 +226,9 @@ class MarkerDetector {
             //this.object3d.updateMatrix()
 
 
-            var fullWidth = 300
-            var fullHeight = 200
-            var thisWidth = 20 // todo dynamic height
+            var fullWidth = 500
+            var fullHeight = 350
+            var thisWidth = 200 // todo dynamic height
             var thisHeight = 20
             var rotationY = 0
             this.div.style.width = thisWidth + 'px';
@@ -302,14 +302,18 @@ class MarkerDetector {
             this.pointOfIntersectionB.project(camera)
             this.pointOfIntersectionC.project(camera)
 
+            
             this.div.style.left = Math.round(this.pointOfIntersectionA.x * fullWidth + fullWidth) + 'px';
             this.div.style.top = Math.round(fullHeight - this.pointOfIntersectionA.y * fullHeight ) + 'px';
+            this.div.textContent = "" + this.div.style.left + ", " + this.div.style.top + " " + this.pointOfIntersectionA.x + ", " + this.pointOfIntersectionA.y
 
             this.divb.style.left = Math.round(this.pointOfIntersectionB.x * fullWidth + fullWidth) + 'px';
             this.divb.style.top = Math.round(fullHeight - this.pointOfIntersectionB.y * fullHeight ) + 'px';
+            this.divb.textContent = "" + this.divb.style.left + ", " + this.divb.style.top + " " + this.pointOfIntersectionB.x + ", " + this.pointOfIntersectionB.y
 
             this.divc.style.left = Math.round(this.pointOfIntersectionC.x * fullWidth + fullWidth) + 'px';
             this.divc.style.top = Math.round(fullHeight - this.pointOfIntersectionC.y * fullHeight ) + 'px';
+            this.divc.textContent = "" + this.divc.style.left + ", " + this.divc.style.top + " " + this.pointOfIntersectionC.x + ", " + this.pointOfIntersectionC.y
 
             //this.object3d.rotation.copy(saveRotation.copy)
             //this.object3d.updateMatrix()
@@ -497,16 +501,48 @@ function toggle(x) {
 }
 
 
+// var onDrag = throttled(250, function(top, left) {
+//     console.log("ondrag", top, left)
+
+
 var onDrag = throttled(250, function(top, left) {
     console.log("ondrag", top, left)
+
+
+// furtherest left point - min of A.x's
+// furtherest right point - max of A.x's
+// map to widt
+    var minX = 9999999999999999
+    var maxX = -9999999999999999
+    var minY = 9999999999999999
+    var maxY = -9999999999999999
     detectors.forEach(function(detector) {
-        sendPositionMessage(detector.followerId, top, left, 1);
+        minX = Math.min(minX, detector.pointOfIntersectionA.x)
+        maxX = Math.max(maxX, detector.pointOfIntersectionC.x)
+        minY = Math.min(minY, detector.pointOfIntersectionB.y)
+        maxY = Math.max(maxY, detector.pointOfIntersectionA.y)
+    });
+
+    console.log("minX", minX, "maxX", maxX, "minY", minY, "maxY", maxY)
+    var detectorWidth = maxX - minX
+    var detectorHeight = maxY - minY
+
+    //var imageHeight = image.height;
+
+    detectors.forEach(function(detector) {
+        var scalarX = (detector.pointOfIntersectionA.x - minX) / detectorWidth
+        var scalarY = (detector.pointOfIntersectionB.y - maxY) / detectorHeight
+        sendPositionMessage(
+            detector.followerId, 
+            top + (canvasHeight * scalarY), 
+            left - (canvasWidth * scalarX), 1
+        );
     });
 });
 
 function switchViews() {
     // switch back and forth between video and mural views
-    var image = document.getElementById("draggable-image");
+    
     toggle(draggable);
     toggle(document.getElementById("chat-container"));
     toggle(document.getElementsByTagName("video")[0]);
@@ -517,12 +553,14 @@ function switchViews() {
             sendMarkerMessage(detector.followerId, detector.markerId)
         });
     } else {
+        var image = document.getElementById("draggable-image");
         var imageURL = '/static/images/PanamericanUnity.jpg';
         var imageWidth = image.width;
         var imageHeight = image.height;
         detectors.forEach(function(detector) {
             console.log("sending to marker", detector.followerId, imageURL, imageWidth, imageHeight)
             sendImageMessage(detector.followerId, imageURL, imageWidth, imageHeight);
+            onDrag(0,0)
         });
     }
     
