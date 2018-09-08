@@ -499,8 +499,8 @@ function toggle(x) {
 
 var onDrag = throttled(250, function(top, left) {
     console.log("ondrag", top, left)
-    foundMarkers.forEach(function(follower) {
-        sendPositionMessage(follower, top, left, 1);
+    detectors.forEach(function(detector) {
+        sendPositionMessage(detector.followerId, top, left, 1);
     });
 });
 
@@ -520,9 +520,9 @@ function switchViews() {
         var imageURL = '/static/images/PanamericanUnity.jpg';
         var imageWidth = image.width;
         var imageHeight = image.height;
-        foundMarkers.forEach(function(follower) {
-            console.log("sending to marker", follower, imageURL, imageWidth, imageHeight)
-            sendImageMessage(follower, imageURL, imageWidth, imageHeight);
+        detectors.forEach(function(detector) {
+            console.log("sending to marker", detector.followerId, imageURL, imageWidth, imageHeight)
+            sendImageMessage(detector.followerId, imageURL, imageWidth, imageHeight);
         });
     }
     

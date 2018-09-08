@@ -45,16 +45,15 @@ Check it out: https://protected-island-17148.herokuapp.com
 * [X] write system to draw divs on the screen in screen coords based on object3d information. Because I'm dealing with planes I think i can combine position and rotation, I should also be able to make a pure threejs file that does it
 
 * [x] leader - add button to transition to image view
-* [ ] leader - wire up button to
-  * [ ] V1 same image on every screen
+* [x] leader - wire up button to
+  * [x] V1 same image on every screen
   * [ ] V2 send proper position info
   * [ ] gather data on visible markers
-  * [ ] transition to view rendering the image
-  * [ ] send setImage and positionImage messages to each client
-  * [ ] allow dragging and zooming on an said image
+  * [x] transition to view rendering the image
+  * [x] send setImage and positionImage messages to each client
+  * [x] allow dragging and zooming on an said image
 * [ ] follower - after N seconds of no activity, switch ar code back to qr code
 * [ ] Give license a name
-.js/examples/multi-markers
 * [ ] possibly combine image an position messages
 
 
@@ -109,6 +108,7 @@ Check it out: https://protected-island-17148.herokuapp.com
 
 
 ### Links
+* http://riveramural.org/fullmural
 * https://github.com/mitmedialab/Junkyard-Jumbotron
 * Junkyard Jumbotron http://www.businessinsider.com/how-to-transform-multiple-screens-into-one-big-virtual-display-2011-3
 

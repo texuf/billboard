@@ -27,7 +27,7 @@ var follower = new PubSubClient(function(message) {
             showImage(message.imageURL, message.imageWidth, message.imageHeight)
             break
         case "position":
-            console.log("got message to display position", message.x, message.y, message.scale)
+            // console.log("got message to display position", message.x, message.y, message.scale)
             positionImage(message.x, message.y, message.scale)
             break
         case "ping":
