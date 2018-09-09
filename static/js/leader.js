@@ -530,8 +530,8 @@ var onDrag = throttled(250, function(top, left) {
     //var imageHeight = image.height;
 
     detectors.forEach(function(detector) {
-        var scalarX = (detector.pointOfIntersectionA.x - minX) / detectorWidth
-        var scalarY = (detector.pointOfIntersectionB.y - maxY) / detectorHeight
+        var scalarX = detectorWidth == 0 ? 0 : (detector.pointOfIntersectionA.x - minX) / detectorWidth
+        var scalarY = detectorHeight == 0 ? 0 : (detector.pointOfIntersectionB.y - maxY) / detectorHeight
         sendPositionMessage(
             detector.followerId, 
             top + (canvasHeight * scalarY), 
@@ -578,5 +578,5 @@ var draggable = document.getElementById("draggable");
 dragElement(draggable, onDrag);
 
 // debug
-// onQrCodeFound("BYc8Dco")
+onQrCodeFound("q7TYVpC")
 // onQrCodeFound("jHgU68m")
