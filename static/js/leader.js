@@ -232,7 +232,7 @@ class MarkerDetector {
             //this.object3d.updateMatrix()
 
 
-            var fullWidth = 500
+            var fullWidth = 400
             var fullHeight = 350
             var thisWidth = 200 // todo dynamic height
             var thisHeight = 20
@@ -311,15 +311,15 @@ class MarkerDetector {
             
             this.div.style.left = Math.round(this.pointOfIntersectionA.x * fullWidth + fullWidth) + 'px';
             this.div.style.top = Math.round(fullHeight - this.pointOfIntersectionA.y * fullHeight ) + 'px';
-            this.div.textContent = "" + this.div.style.left + ", " + this.div.style.top + " " + this.pointOfIntersectionA.x + ", " + this.pointOfIntersectionA.y
+            this.div.textContent = "a" + this.div.style.left + ", " + this.div.style.top + " " + this.pointOfIntersectionA.x + ", " + this.pointOfIntersectionA.y
 
             this.divb.style.left = Math.round(this.pointOfIntersectionB.x * fullWidth + fullWidth) + 'px';
             this.divb.style.top = Math.round(fullHeight - this.pointOfIntersectionB.y * fullHeight ) + 'px';
-            this.divb.textContent = "" + this.divb.style.left + ", " + this.divb.style.top + " " + this.pointOfIntersectionB.x + ", " + this.pointOfIntersectionB.y
+            this.divb.textContent = "b" + this.divb.style.left + ", " + this.divb.style.top + " " + this.pointOfIntersectionB.x + ", " + this.pointOfIntersectionB.y
 
             this.divc.style.left = Math.round(this.pointOfIntersectionC.x * fullWidth + fullWidth) + 'px';
             this.divc.style.top = Math.round(fullHeight - this.pointOfIntersectionC.y * fullHeight ) + 'px';
-            this.divc.textContent = "" + this.divc.style.left + ", " + this.divc.style.top + " " + this.pointOfIntersectionC.x + ", " + this.pointOfIntersectionC.y
+            this.divc.textContent = "c" + this.divc.style.left + ", " + this.divc.style.top + " " + this.pointOfIntersectionC.x + ", " + this.pointOfIntersectionC.y
 
             //this.object3d.rotation.copy(saveRotation.copy)
             //this.object3d.updateMatrix()
@@ -512,7 +512,7 @@ function toggle(x) {
 
 
 var onDrag = throttled(250, function(top, left) {
-    console.log("onDrag", top, left);
+    console.log("onDrag", "left", left, "top", top);
 
 
 // furtherest left point - min of A.x's
@@ -529,19 +529,23 @@ var onDrag = throttled(250, function(top, left) {
         maxY = Math.max(maxY, detector.pointOfIntersectionA.y)
     });
 
-    console.log("minX", minX, "maxX", maxX, "minY", minY, "maxY", maxY)
     var detectorWidth = maxX - minX
     var detectorHeight = maxY - minY
+
+    console.log("minX", minX, "maxX", maxX, "minY", minY, "maxY", maxY, "detectorWidth", detectorWidth, "detectorHeight", detectorHeight)
 
     //var imageHeight = image.height;
 
     detectors.forEach(function(detector) {
         var scalarX = detectorWidth == 0 ? 0 : (detector.pointOfIntersectionA.x - minX) / detectorWidth
+        //var scalarX = detectorWidth == 0 ? 0 : (detector.pointOfIntersectionC.x - maxX) / detectorWidth
         var scalarY = detectorHeight == 0 ? 0 : (detector.pointOfIntersectionB.y - maxY) / detectorHeight
         sendPositionMessage(
             detector.followerId, 
             top + (canvasHeight * scalarY), 
-            left - (canvasWidth * scalarX), 1
+            left - (canvasWidth * scalarX),
+            //left - (canvasWidth * (1 - scalarX)), 
+            1
         );
     });
 });
