@@ -6,6 +6,12 @@ console.assert(typeof outbox != 'undefined', "please import pubsub.js before con
 console.assert(typeof dragElement != 'undefined', "please import draggable.js before continuing")
 console.assert(typeof throttled != 'undefined', "please import throttled.js before continuing")
 
+// prevent scrolling from within input field
+window.addEventListener('touchmove', function(e) {
+    
+    e.preventDefault();
+}, {passive : false});
+
 // constants
 var canvasWidth = window.innerWidth
 var canvasHeight = window.innerHeight
