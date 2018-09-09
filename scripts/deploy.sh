@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "info: Pushing master to heroku..."
-git push heroku master
+git push -f heroku master
 
 while true; do
     read -p "Would you like to tail the logs? y/n " yn
