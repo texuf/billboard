@@ -2,14 +2,15 @@
 <html>
     <head>
         <title>Leader</title>
-        <link href="${url_for('static', filename='css/bootstrap.min.css')}$" rel="stylesheet" media="screen">
-        <link href="${url_for('static', filename='css/application.css')}$" rel="stylesheet" media="screen">
+        <link rel="stylesheet" media="screen" href="${url_for('static', filename='css/bootstrap.min.css')}$">
+        <link rel="stylesheet" media="screen" href="${url_for('static', filename='css/application.css')}$">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- three.js library -->
-        <script src="${url_for('static', filename='vendor/three/build/three.min.js')}$"></script>
-        <script src="${url_for('static', filename='vendor/three/examples/js/libs/stats.min.js')}$"></script>
+        <script type="text/javascript" src="${url_for('static', filename='vendor/three/build/three.min.js')}$"></script>
+        <script type="text/javascript" src="${url_for('static', filename='vendor/three/examples/js/libs/stats.min.js')}$"></script>
         <!-- ar.js -->
-        <script src="${url_for('static', filename='vendor/ar/build/ar.js')}$"></script>
+        <script type="text/javascript" src="${url_for('static', filename='vendor/ar/build/ar.js')}$"></script>
+
     </head>
     <body>
         
@@ -25,7 +26,7 @@
         <dif id="draggable" style="position: absolute; z-index: 99; display: none">
             <img id="draggable-image" src="${url_for('static', filename='images/PanamericanUnity.jpg')}$">
         </dif>
-        <script src="${url_for('static', filename='vendor/jsqrcode-packaged/build/jsqrcode.js')}$"></script>
+        <script type="text/javascript" src="${url_for('static', filename='vendor/jsqrcode-packaged/build/jsqrcode.js')}$"></script>
         <script type="text/javascript" src="${url_for('static', filename='vendor/jquery-2.0.3.min.js')}$"></script>
         <script type="text/javascript" src="${url_for('static', filename='vendor/reconnecting-websocket.min.js')}$"></script>
         <script type="text/javascript" src="${url_for('static', filename='js/pubsub.js')}$"></script>
