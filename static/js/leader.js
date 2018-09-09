@@ -506,7 +506,7 @@ function toggle(x) {
 
 
 var onDrag = throttled(250, function(top, left) {
-    console.log("ondrag", top, left)
+    console.log("onDrag", top, left);
 
 
 // furtherest left point - min of A.x's
