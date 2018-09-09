@@ -34,12 +34,11 @@ function showImage(imageURL, imageWidth, imageHeight) {
 }
 
 function positionImage(positionTop, positionLeft, scale) {
-    console.log("position", positionTop, positionLeft, scale)
+    console.log("position", "left", positionLeft, "top", positionTop, scale, qrcodeSize, canvasWidth, canvasHeight)
     var image = document.getElementById('image-container-img')
     var pct = scale // Math.min(qrcodeSize / imageWidth,  qrcodeSize / imageHeight ) * scale
-    var startX = 0 // canvasWidth / 2 - qrcodeSize / 2
-    var startY = 0 // canvasHeight / 2 - qrcodeSize / 2
-    console.log("pct", pct)
+    var top = positionTop + (canvasHeight - qrcodeSize) / 2
+    var left = positionLeft + (canvasWidth - qrcodeSize) / 2
 
     var scaledWidth = imageWidth * pct
     var scaledHeight = imageHeight * pct
@@ -47,6 +46,6 @@ function positionImage(positionTop, positionLeft, scale) {
     TweenLite.to(image, 0.3, {width: scaledWidth + 'px', height: scaledHeight + 'px'});
 
     followerImageContainer.style.position = 'absolute'
-    TweenLite.to(followerImageContainer, 0.3, {top: positionTop + 'px', left: positionLeft + 'px'});
+    TweenLite.to(followerImageContainer, 0.3, {top: top + 'px', left: left + 'px'});
 
 }
