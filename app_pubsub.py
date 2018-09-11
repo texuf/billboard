@@ -6,7 +6,7 @@ import gevent
 
 
 REDIS_URL = os.environ['REDIS_URL']
-GLOBAL_CHANNEL = 'chat'
+GLOBAL_CHANNEL = 'CHAT'
 
 # setup redis
 redis = redis.from_url(REDIS_URL)

@@ -142,12 +142,12 @@ def inject_git_sha():
 
 def get_channel(message):
     try:
-        return json.loads(message).get('channel', GLOBAL_CHANNEL)
+        return json.loads(message).get('channel', GLOBAL_CHANNEL).upper()
     except:
         return GLOBAL_CHANNEL
 
 def make_follower_id():
-    return shortuuid.uuid()[:7] # use first 7 digits of shortuuid, should be enough :)
+    return shortuuid.uuid()[:7].upper() # use first 7 digits of shortuuid, should be enough :)
 
 def get_git_revision_short_hash():
     app.logger.info('fetching get_git_revision_short_hash')
