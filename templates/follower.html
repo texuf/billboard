@@ -28,12 +28,12 @@
         }); 
         </script>
         <script type="text/javascript" src="${url_for('static', filename='vendor/reconnecting-websocket.min.js')}$"></script>
-        <script type="text/javascript" src="${url_for('static', filename='js/pubsub.js')}$"></script>
-        <script type="text/javascript" src="${url_for('static', filename='js/pubsub-client.js')}$"></script>
-        <script type="text/javascript" src="${url_for('static', filename='js/pubsub-preview.js')}$"></script>
-        <script type="text/javascript" src="${url_for('static', filename='js/follower-armarker.js')}$"></script>
-        <script type="text/javascript" src="${url_for('static', filename='js/follower-image.js')}$"></script>
-        <script type="text/javascript" src="${url_for('static', filename='js/follower.js')}$?ts=xxxxx2"></script>
+        <script type="text/javascript" src="${url_for('static', filename='js/pubsub.js')}$?sha=${sha}$"></script>
+        <script type="text/javascript" src="${url_for('static', filename='js/pubsub-client.js')}$?sha=${sha}$"></script>
+        <script type="text/javascript" src="${url_for('static', filename='js/pubsub-preview.js')}$?sha=${sha}$"></script>
+        <script type="text/javascript" src="${url_for('static', filename='js/follower-armarker.js')}$?sha=${sha}$"></script>
+        <script type="text/javascript" src="${url_for('static', filename='js/follower-image.js')}$?sha=${sha}$"></script>
+        <script type="text/javascript" src="${url_for('static', filename='js/follower.js')}$?ts=xxxxx2?sha=${sha}$"></script>
         <script>
             startFollowing("${follower_id}$", "${url_for('static', filename='images/3x3/')}$")
         </script>

@@ -29,10 +29,10 @@
         <script type="text/javascript" src="${url_for('static', filename='vendor/jsqrcode-packaged/build/jsqrcode.js')}$"></script>
         <script type="text/javascript" src="${url_for('static', filename='vendor/jquery-2.0.3.min.js')}$"></script>
         <script type="text/javascript" src="${url_for('static', filename='vendor/reconnecting-websocket.min.js')}$"></script>
-        <script type="text/javascript" src="${url_for('static', filename='js/pubsub.js')}$"></script>
-        <script type="text/javascript" src="${url_for('static', filename='js/pubsub-preview.js')}$"></script>
-        <script type="text/javascript" src="${url_for('static', filename='js/draggable.js')}$"></script>
-        <script type="text/javascript" src="${url_for('static', filename='js/throttled.js')}$"></script>
-        <script type="text/javascript" src="${url_for('static', filename='js/leader.js')}$?ts=xxxxx2"></script>
+        <script type="text/javascript" src="${url_for('static', filename='js/pubsub.js')}$?sha=${sha}$"></script>
+        <script type="text/javascript" src="${url_for('static', filename='js/pubsub-preview.js')}$?sha=${sha}$"></script>
+        <script type="text/javascript" src="${url_for('static', filename='js/draggable.js')}$?sha=${sha}$"></script>
+        <script type="text/javascript" src="${url_for('static', filename='js/throttled.js')}$?sha=${sha}$"></script>
+        <script type="text/javascript" src="${url_for('static', filename='js/leader.js')}$?sha=${sha}$"></script>
     </body>
 </html>
