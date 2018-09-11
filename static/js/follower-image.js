@@ -18,7 +18,7 @@ function hideImage() {
 }
 
 function showImage(imageURL, imageWidth, imageHeight) {
-    console.log("image", imageURL, imageWidth, imageHeight)
+    console.log("show image", imageURL, imageWidth, imageHeight)
     hideImage()
 
     self.imageWidth = imageWidth
@@ -30,19 +30,20 @@ function showImage(imageURL, imageWidth, imageHeight) {
     image.style.zIndex = 10500
 
     followerImageContainer.appendChild(image)
-    positionImage(0, 0, 1)
+    //positionImage(0, 0, 1)
 }
 
 function positionImage(positionTop, positionLeft, scale) {
     console.log("position", "left", positionLeft, "top", positionTop, scale, qrcodeSize, canvasWidth, canvasHeight)
     var image = document.getElementById('image-container-img')
-    var pct = scale // Math.min(qrcodeSize / imageWidth,  qrcodeSize / imageHeight ) * scale
-    var top = positionTop + (canvasHeight - qrcodeSize) / 2
-    var left = positionLeft + (canvasWidth - qrcodeSize) / 2
+    var scaledWidth = qrcodeSize / scale // Math.min(qrcodeSize / imageWidth,  qrcodeSize / imageHeight ) * scale
+    
+    var scaledWidthFactor = scaledWidth / imageWidth
+    var scaledHeight = imageHeight * scaledWidthFactor
 
-    var scaledWidth = imageWidth * pct
-    var scaledHeight = imageHeight * pct
-
+    var top = -1 * scaledHeight * positionTop + (canvasHeight - qrcodeSize) / 2
+    var left = -1 *  scaledWidth * positionLeft + (canvasWidth - qrcodeSize) / 2
+    // console.log("scaledW", scaledWidth, "scaledH", scaledHeight, top, left)
     TweenLite.to(image, 0.3, {width: scaledWidth + 'px', height: scaledHeight + 'px'});
 
     followerImageContainer.style.position = 'absolute'

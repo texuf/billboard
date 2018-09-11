@@ -59,9 +59,9 @@ class MarkerDetector {
         this.markerHelper = new MarkerHelper(markerId)
         this.artoolkitMarker.object3d.add(this.markerHelper.object3d)
 
-        this.div = this.addDiv(markerId + "a")
-        this.divb = this.addDiv(markerId + "b")
-        this.divc = this.addDiv(markerId + "c")
+        this.div = this.addDiv(markerId + "a", 0)
+        this.divb = this.addDiv(markerId + "b", 1)
+        this.divc = this.addDiv(markerId + "c", 2)
         
         this.pointOfIntersectionA = new THREE.Vector3();
         this.pointOfIntersectionB = new THREE.Vector3();
@@ -70,18 +70,20 @@ class MarkerDetector {
         this.isActive = false
     }
 
-    addDiv(markerId) {
+    addDiv(markerId, index) {
         var div = document.createElement('div')
         div.style.width = "0px";
         div.style.height = "0px";
         div.style.background = "pink";
         div.style.opacity = "0.5";
         div.style.position = "absolute";
-        div.style.left = "0px";
-        div.style.top = "0px";
+        div.style.left = 10 + "px"
+        div.style.top = (50 + this.markerId * 20 * 3 + index * 20) + "px"
+        console.log("add div", this.markerId, index, div.style.left, div.style.top)
+            
         div.style.overflow = "hidden";
         div.style.zIndex = "999"
-        div.style.textAlign = "center"
+        div.style.textAlign = "left"
         div.id = "marker-" + markerId
         div.textContent = markerId
         document.body.appendChild(div)
@@ -204,23 +206,9 @@ class MarkerDetector {
             this.pointOfIntersectionC.project(camera)
 
             
-            //this.div.style.left = Math.round(this.pointOfIntersectionA.x * fullWidth + fullWidth) + 'px';
-            //this.div.style.top = Math.round(fullHeight - this.pointOfIntersectionA.y * fullHeight ) + 'px';
-            this.div.style.left = 10
-            this.div.style.top = 50 + this.markerId * thisHeight * 3
-            this.div.textContent = "a" + this.pointOfIntersectionA.x + ", " + this.pointOfIntersectionA.y
-
-            //this.divb.style.left = Math.round(this.pointOfIntersectionB.x * fullWidth + fullWidth) + 'px';
-            //this.divb.style.top = Math.round(fullHeight - this.pointOfIntersectionB.y * fullHeight ) + 'px';
-            this.divb.style.left = 10
-            this.divb.style.top = this.div.style.top + this.height
-            this.divb.textContent = "b" + this.pointOfIntersectionB.x + ", " + this.pointOfIntersectionB.y
-
-            //this.divc.style.left = Math.round(this.pointOfIntersectionC.x * fullWidth + fullWidth) + 'px';
-            //this.divc.style.top = Math.round(fullHeight - this.pointOfIntersectionC.y * fullHeight ) + 'px';
-            this.divc.style.left = 10
-            this.divc.style.top = this.divb.style.top + this.height
-            this.divc.textContent = "c" + this.pointOfIntersectionC.x + ", " + this.pointOfIntersectionC.y
+            this.div.textContent = "a " + this.pointOfIntersectionA.x + ", " + this.pointOfIntersectionA.y
+            this.divb.textContent = "b " + this.pointOfIntersectionB.x + ", " + this.pointOfIntersectionB.y
+            this.divc.textContent = "c " + this.pointOfIntersectionC.x + ", " + this.pointOfIntersectionC.y
 
             //this.object3d.rotation.copy(saveRotation.copy)
             //this.object3d.updateMatrix()

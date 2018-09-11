@@ -241,19 +241,27 @@ var onDrag = throttled(250, function(top, left) {
 
     var fieldWith = maxX - minX
     var fieldHeight = maxY - minY
+    var fieldSize = Math.max(fieldWith, fieldHeight)
+
+    var image = document.getElementById("draggable-image");
+    var imageWidth = image.width;
+    var imageHeight = image.height;
 
     console.log("minX", minX, "maxX", maxX, "minY", minY, "maxY", maxY, "fieldWith", fieldWith, "fieldHeight", fieldHeight)
 
     //var imageHeight = image.height;
 
     activeDetectors.forEach(function(detector) {
-        var scalarX = fieldWith == 0 ? 0 : (detector.pointOfIntersectionA.x - minX) / fieldWith
-        var scalarY = fieldHeight == 0 ? 0 : (detector.pointOfIntersectionB.y - maxY) / fieldHeight
+
+        var scalarX = fieldWith == 0 ? 0 : (detector.pointOfIntersectionA.x - minX) / fieldSize
+        var scalarY = fieldHeight == 0 ? 0 : (detector.pointOfIntersectionB.y - minY) / fieldSize
+        var pctOfWhole = (detector.pointOfIntersectionC.x - detector.pointOfIntersectionA.x) / fieldSize
+        detector.div.textContent = "x " + scalarX + " y " + scalarY + " pct " + pctOfWhole
         sendPositionMessage(
             detector.followerId, 
-            top + (canvasHeight * scalarY), 
-            left - (canvasWidth * scalarX),
-            1
+            scalarY, 
+            scalarX,
+            pctOfWhole
         );
     });
 });
