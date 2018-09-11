@@ -195,18 +195,27 @@ var currentMarkerId = 0
 var foundMarkers = new Set();
 
 function onQrCodeFound(qrCodeValue) {
-    if (foundMarkers.has(qrCodeValue)) {
-        return;
+    console.log("onQrCodeFound", foundMarkers.has(qrCodeValue), qrCodeValue, foundMarkers)
+    if (foundMarkers.has(qrCodeValue) === false) {
+        foundMarkers.add(qrCodeValue)
+        var followerId = qrCodeValue;
+        var markerId = currentMarkerId;
+        currentMarkerId += 1
+        // create a detector
+        detectors.push(new MarkerDetector(followerId, markerId, scene));
     }
-    console.log("onQrCodeFound", foundMarkers)
-    foundMarkers.add(qrCodeValue)
-    var followerId = qrCodeValue;
-    var markerId = currentMarkerId;
-    currentMarkerId += 1
-    // create a detector
-    detectors.push(new MarkerDetector(followerId, markerId, scene));
     // update the client
-    sendMarkerMessage(followerId, markerId);
+    var markerId = markerIdFor(qrCodeValue)
+    sendMarkerMessage(qrCodeValue, markerId);
+}
+
+function markerIdFor(qrCodeValue) {
+    for (var i = 0; i < detectors.length; i++) {
+        if (detectors[i].followerId == qrCodeValue) {
+            return detectors[i].markerId
+        }
+    }
+    return ""
 }
 
 function toggle(x) {
@@ -295,8 +304,8 @@ function switchViews() {
         }).forEach(function(detector) {
             console.log("sending to marker", detector.followerId, imageURL, imageWidth, imageHeight)
             sendImageMessage(detector.followerId, imageURL, imageWidth, imageHeight);
-            onDrag(0,0)
         });
+        onDrag(0,0)
     }
     
 }
