@@ -234,7 +234,7 @@ class MarkerDetector {
 
             var fullWidth = 400
             var fullHeight = 350
-            var thisWidth = 200 // todo dynamic height
+            var thisWidth = 300 // todo dynamic height
             var thisHeight = 20
             var rotationY = 0
             this.div.style.width = thisWidth + 'px';
@@ -247,9 +247,9 @@ class MarkerDetector {
             this.divc.style.height = thisHeight + 'px';
             //this.div.style.left = "200px"; //(fullWidth/2 + this.object3d.position.x * fullWidth/2) +'px';
             //this.div.style.top = "100px"; //(fullHeight/2 - this.object3d.position.y * fullHeight/2 ) +'px';
-            this.div.style.transform = 'translate3d(-50%, -50%, 0) rotateZ('+this.object3d.rotation.y*-1+'rad)'
-            this.divb.style.transform = 'translate3d(-50%, -50%, 0) rotateZ('+this.object3d.rotation.y*-1+'rad)'
-            this.divc.style.transform = 'translate3d(-50%, -50%, 0) rotateZ('+this.object3d.rotation.y*-1+'rad)'
+            //this.div.style.transform = 'translate3d(-50%, -50%, 0) rotateZ('+this.object3d.rotation.y*-1+'rad)'
+            //this.divb.style.transform = 'translate3d(-50%, -50%, 0) rotateZ('+this.object3d.rotation.y*-1+'rad)'
+            //this.divc.style.transform = 'translate3d(-50%, -50%, 0) rotateZ('+this.object3d.rotation.y*-1+'rad)'
             //var vector = projector.projectVector( this.object3d.position.clone(), camera );
             //vector.x *= canvas.width;
             //vector.y *= canvas.height;
@@ -309,17 +309,23 @@ class MarkerDetector {
             this.pointOfIntersectionC.project(camera)
 
             
-            this.div.style.left = Math.round(this.pointOfIntersectionA.x * fullWidth + fullWidth) + 'px';
-            this.div.style.top = Math.round(fullHeight - this.pointOfIntersectionA.y * fullHeight ) + 'px';
-            this.div.textContent = "a" + this.div.style.left + ", " + this.div.style.top + " " + this.pointOfIntersectionA.x + ", " + this.pointOfIntersectionA.y
+            //this.div.style.left = Math.round(this.pointOfIntersectionA.x * fullWidth + fullWidth) + 'px';
+            //this.div.style.top = Math.round(fullHeight - this.pointOfIntersectionA.y * fullHeight ) + 'px';
+            this.div.style.left = 10
+            this.div.style.top = 50 + this.markerId * thisHeight * 3
+            this.div.textContent = "a" + this.pointOfIntersectionA.x + ", " + this.pointOfIntersectionA.y
 
-            this.divb.style.left = Math.round(this.pointOfIntersectionB.x * fullWidth + fullWidth) + 'px';
-            this.divb.style.top = Math.round(fullHeight - this.pointOfIntersectionB.y * fullHeight ) + 'px';
-            this.divb.textContent = "b" + this.divb.style.left + ", " + this.divb.style.top + " " + this.pointOfIntersectionB.x + ", " + this.pointOfIntersectionB.y
+            //this.divb.style.left = Math.round(this.pointOfIntersectionB.x * fullWidth + fullWidth) + 'px';
+            //this.divb.style.top = Math.round(fullHeight - this.pointOfIntersectionB.y * fullHeight ) + 'px';
+            this.divb.style.left = 10
+            this.divb.style.top = this.div.style.top + this.height
+            this.divb.textContent = "b" + this.pointOfIntersectionB.x + ", " + this.pointOfIntersectionB.y
 
-            this.divc.style.left = Math.round(this.pointOfIntersectionC.x * fullWidth + fullWidth) + 'px';
-            this.divc.style.top = Math.round(fullHeight - this.pointOfIntersectionC.y * fullHeight ) + 'px';
-            this.divc.textContent = "c" + this.divc.style.left + ", " + this.divc.style.top + " " + this.pointOfIntersectionC.x + ", " + this.pointOfIntersectionC.y
+            //this.divc.style.left = Math.round(this.pointOfIntersectionC.x * fullWidth + fullWidth) + 'px';
+            //this.divc.style.top = Math.round(fullHeight - this.pointOfIntersectionC.y * fullHeight ) + 'px';
+            this.divc.style.left = 10
+            this.divc.style.top = this.divb.style.top + this.height
+            this.divc.textContent = "c" + this.pointOfIntersectionC.x + ", " + this.pointOfIntersectionC.y
 
             //this.object3d.rotation.copy(saveRotation.copy)
             //this.object3d.updateMatrix()
@@ -529,22 +535,20 @@ var onDrag = throttled(250, function(top, left) {
         maxY = Math.max(maxY, detector.pointOfIntersectionA.y)
     });
 
-    var detectorWidth = maxX - minX
-    var detectorHeight = maxY - minY
+    var fieldWith = maxX - minX
+    var fieldHeight = maxY - minY
 
-    console.log("minX", minX, "maxX", maxX, "minY", minY, "maxY", maxY, "detectorWidth", detectorWidth, "detectorHeight", detectorHeight)
+    console.log("minX", minX, "maxX", maxX, "minY", minY, "maxY", maxY, "fieldWith", fieldWith, "fieldHeight", fieldHeight)
 
     //var imageHeight = image.height;
 
     detectors.forEach(function(detector) {
-        var scalarX = detectorWidth == 0 ? 0 : (detector.pointOfIntersectionA.x - minX) / detectorWidth
-        //var scalarX = detectorWidth == 0 ? 0 : (detector.pointOfIntersectionC.x - maxX) / detectorWidth
-        var scalarY = detectorHeight == 0 ? 0 : (detector.pointOfIntersectionB.y - maxY) / detectorHeight
+        var scalarX = fieldWith == 0 ? 0 : (detector.pointOfIntersectionA.x - minX) / fieldWith
+        var scalarY = fieldHeight == 0 ? 0 : (detector.pointOfIntersectionB.y - maxY) / fieldHeight
         sendPositionMessage(
             detector.followerId, 
             top + (canvasHeight * scalarY), 
             left - (canvasWidth * scalarX),
-            //left - (canvasWidth * (1 - scalarX)), 
             1
         );
     });
