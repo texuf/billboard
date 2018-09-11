@@ -36,14 +36,14 @@ function showImage(imageURL, imageWidth, imageHeight) {
 function positionImage(positionTop, positionLeft, scale) {
     console.log("position", "left", positionLeft, "top", positionTop, scale, qrcodeSize, canvasWidth, canvasHeight)
     var image = document.getElementById('image-container-img')
-    var scaledWidth = qrcodeSize / scale // Math.min(qrcodeSize / imageWidth,  qrcodeSize / imageHeight ) * scale
+    var scaledHeight = qrcodeSize / scale // Math.min(qrcodeSize / imageWidth,  qrcodeSize / imageHeight ) * scale
     
-    var scaledWidthFactor = scaledWidth / imageWidth
-    var scaledHeight = imageHeight * scaledWidthFactor
+    var scaledHeightFactor = scaledHeight / imageHeight
+    var scaledWidth = imageWidth * scaledHeightFactor
 
     var top = -1 * scaledHeight * positionTop + (canvasHeight - qrcodeSize) / 2
     var left = -1 *  scaledWidth * positionLeft + (canvasWidth - qrcodeSize) / 2
-    // console.log("scaledW", scaledWidth, "scaledH", scaledHeight, top, left)
+    console.log("scaledW", scaledWidth, "scaledH", scaledHeight, top, left)
     TweenLite.to(image, 0.3, {width: scaledWidth + 'px', height: scaledHeight + 'px'});
 
     followerImageContainer.style.position = 'absolute'

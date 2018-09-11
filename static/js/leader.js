@@ -256,20 +256,27 @@ var onDrag = throttled(250, function(top, left) {
     var imageWidth = image.width;
     var imageHeight = image.height;
 
-    console.log("minX", minX, "maxX", maxX, "minY", minY, "maxY", maxY, "fieldWith", fieldWith, "fieldHeight", fieldHeight)
+    //console.log("minX", minX, "maxX", maxX, "minY", minY, "maxY", maxY, "fieldWith", fieldWith, "fieldHeight", fieldHeight)
 
     //var imageHeight = image.height;
-
+    var topPct = top / imageHeight * -1
+    var leftPct = left / imageWidth * -1
+    console.log("topPct", topPct, "leftPct", leftPct)
     activeDetectors.forEach(function(detector) {
 
         var scalarX = fieldWith == 0 ? 0 : (detector.pointOfIntersectionA.x - minX) / fieldSize
-        var scalarY = fieldHeight == 0 ? 0 : (detector.pointOfIntersectionB.y - minY) / fieldSize
+        var scalarY = fieldHeight == 0 ? 0 : (maxY - detector.pointOfIntersectionA.y) / fieldSize
         var pctOfWhole = (detector.pointOfIntersectionC.x - detector.pointOfIntersectionA.x) / fieldSize
+        if (imageWidth > imageHeight) {
+            scalarX *= imageHeight / imageWidth
+        } else {
+            scalarY *= imageWidth / imageHeight
+        }
         detector.div.textContent = "x " + scalarX + " y " + scalarY + " pct " + pctOfWhole
         sendPositionMessage(
             detector.followerId, 
-            scalarY, 
-            scalarX,
+            topPct + scalarY, 
+            leftPct + scalarX,
             pctOfWhole
         );
     });
@@ -324,3 +331,12 @@ dragElement(draggable, onDrag);
 // debug
 // onQrCodeFound("q7TYVpC")
 // onQrCodeFound("jHgU68m")
+
+
+
+
+
+// revisit isActive (turn on is active if ever we found something)
+// figure out why left hand edge is so far off... this is a regression
+// fix printouts to something useful (x & y pct would be good)
+// 
