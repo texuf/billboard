@@ -26,11 +26,11 @@ Check it out: https://protected-island-17148.herokuapp.com
   * [ ] possibly combine image and position messages
   * [ ] zooming
   * [ ] preset examples of images
-  * [ ] swap out / choose / upload image
+  * [ ] swap out / choose / upload image, media over ws (a2) 
 
 * [ ] follower
-  * [ ] embed url in qr code
-  * [ ] after N seconds of no activity, switch ar code back to qr code
+  * [ ] embed url in qr code (a1) 
+  * [ ] after N seconds of no activity, switch ar code back to qr code (a1.1)
   * [ ] scrolling image doesn't work on my ipad
 * [ ] Give license a name
 
@@ -56,6 +56,8 @@ Check it out: https://protected-island-17148.herokuapp.com
     $ ./scripts/run.sh # uses heroku local command to launch the site with the ProcfileDevelopment settings, requires cli
 ```
 ### Run Tests
+
+ * check out https://protected-island-17148.herokuapp.com/test
 ```
     $ ./scripts/run_tests.sh
 ```
