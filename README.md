@@ -19,42 +19,21 @@ Check it out: https://protected-island-17148.herokuapp.com
 * [leader] send a stupid amount of messages to followers about all kinds of things including which part of a particular image to display how and when and occasionally when to re-calibrate 
 
 ### TODO / In Progress
-* [X] Test - grab first measurement of the marker, then keep rendering the cube there, test resiliency 
-  * this causes me to lose the 3d position of my marker. because we are never calculating the camera angle, only the location of the marker,  I don't think I'll be able to keep updating it in the scene unless I continually track the token
-* [X] Switch to barcodes, try out the 3x3 markers downloaded from https://github.com/artoolkit/artoolkit5/tree/master/doc/patterns
-  * works great!
-* [X] Test - wrap the code in leader so that I can create many instances of trackers that each track a different marker
-  * works great!
-* [X] Test - will two MarkerDetector instances render images at the same time
-  * from laptop - load controller screen with two hard coded detectors, 0 and 1
-  * open follower/0 from phone 1
-  * open follower/1 from phone 2
-  * test if the controller will read both controllers at the same time
-  * IT WORKS ! I can register up to 64 different codes. I expect that if the codes are stable it won't be an issue to recognize at least a subset of them. 
-* [X] Open multiple browser windows displaying follower qr_codes, scan the qr codes with leader url on phone, 
-* [X] after detecting qr code, send message from leader to follower to swidth qr codes to ar codes
-  * [X] have followers subscribe to their follower_ids
-  * [X] allow leaders to send messages to follower_id
-  * [X] create message types (backend is type agnostic, only required field is channel)
-    * [X] type=marker index=[0-63]
-    * [X] type=image url="..."
-    * [X] type=position x=[0-1] y=[0-1] width=[0-1] height=[0-1]
-* [X] Run qr code reader and marker detector on the same scene?
-* [X] use `var markerHelper = new THREEx.ArMarkerHelper(markerControls)` instead of torus
-* [X] investigate multi markers, pretty sure that's close to what i want to do - https://github.com/jeromeetienne/AR.js/tree/master/three
-* [X] write system to draw divs on the screen in screen coords based on object3d information. Because I'm dealing with planes I think i can combine position and rotation, I should also be able to make a pure threejs file that does it
 
-* [x] leader - add button to transition to image view
-* [x] leader - wire up button to
-  * [x] V1 same image on every screen
-  * [ ] V2 send proper position info
-  * [ ] gather data on visible markers
-  * [x] transition to view rendering the image
-  * [x] send setImage and positionImage messages to each client
-  * [x] allow dragging and zooming on an said image
-* [ ] follower - after N seconds of no activity, switch ar code back to qr code
+* [ ] leader
+  * [ ] allow landscape mode
+  * [ ] better ar marker recoginition algorithm matrix, should be able to use http://marctenbosch.com/quaternions/
+  * [ ] possibly combine image and position messages
+  * [ ] zooming
+  * [ ] preset examples of images
+  * [ ] swap out / choose / upload image
+
+* [ ] follower
+  * [ ] embed url in qr code
+  * [ ] after N seconds of no activity, switch ar code back to qr code
+  * [ ] scrolling image doesn't work on my ipad
 * [ ] Give license a name
-* [ ] possibly combine image an position messages
+
 
 
 ### Prerequisits
