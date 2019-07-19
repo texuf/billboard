@@ -1,5 +1,5 @@
 click==6.7
-Flask==0.12.3
+Flask==1.0
 Flask-Sockets==0.2.1
 Flask-SSLify==0.1.5
 gevent==1.2.2
